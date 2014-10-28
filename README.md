@@ -8,6 +8,6 @@
     <li>Solution to programming assignments based on Coursera's "Algorithms: Design and Analysis" (Part 1) from Stanford University.</li>
     <li>Solutions are entirely own and are subject to the course's requirements.</li>
     <li>Each directory contains one or more solutions to a popular algorithm's problem.</li>
-    <li>Programs are written in Ruby version 2.1.2p95.</li>
+    <li>Programs are tested with Ruby version 2.1.3p242.</li>
   </ul>
 </p>
