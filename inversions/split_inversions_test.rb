@@ -19,7 +19,6 @@ class SplitInversionsTest < MiniTest::Unit::TestCase
     lines.each do |line|
       @a << line.to_i
     end
-    puts "#{@a}"
   end
 
   # Reads lines of given file and arranges them in a list. Returns a list of
@@ -45,19 +44,21 @@ class SplitInversionsTest < MiniTest::Unit::TestCase
     a = []
     b = [1, 3, 5]
     c = [2, 4, 6]
-    split_inversions = merge_and_count_split_inversions(a, b, c, 0, 2, 5)
+    inversions = 
+      SplitInversions.merge_and_count_split_inversions(a, b, c, 0, 2, 5)
     
     # split_inversions should be 3, a should be [1, 2, 3, 4, 5, 6]
-    assert_equal 3, split_inversions
+    assert_equal 3, inversions
     assert_equal [1, 2, 3, 4, 5, 6], a
 
     a = []
     b = [3, 4, 5]
     c = [1, 2]
-    split_inversions = merge_and_count_split_inversions(a, b, c, 0, 2, 4)
+    inversions = 
+      SplitInversions.merge_and_count_split_inversions(a, b, c, 0, 2, 4)
 
     # split_inversions should be 6, a should be [1, 2, 3, 4, 5]
-    assert_equal 6, split_inversions
+    assert_equal 6, inversions
     assert_equal [1, 2, 3, 4, 5], a
   end
 
