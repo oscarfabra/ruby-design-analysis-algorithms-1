@@ -73,7 +73,7 @@ class SplitInversionsTest < MiniTest::Unit::TestCase
     # Test case 2; 5 numbers.
     a = [5, 4, 3, 2, 1]
     inversions = SplitInversions.sort_and_count(a, 0, a.size - 1)
-    assert_equal 4, inversions
+    assert_equal 10, inversions
     assert_equal [1, 2, 3, 4, 5], a
 
     # Test case 3; 15 numbers.

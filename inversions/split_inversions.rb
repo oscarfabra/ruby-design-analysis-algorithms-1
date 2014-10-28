@@ -24,7 +24,19 @@ class SplitInversions
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def sort_and_count(a, lb, ub)
-      # TODO: sort_and_count_bounded
+      if ub <= lb
+        0
+      else
+        mid = lb + (ub - lb)/2  # Gets middle index
+        x = sort_and_count(a, lb, mid)  # Sorts and counts first half of a
+        y = sort_and_count(a, mid + 1, ub)  # Sorts and counts second half of a
+
+        b = a[lb..mid]  # Gets left subarray
+        c = a[mid + 1..ub]  # Gets right subarray
+
+        z = merge_and_count_split_inversions(a, b, c, lb, mid, ub)
+        x + y + z
+      end
     end
 
     # Merges b and c into a and counts split inversions. Returns the number of
