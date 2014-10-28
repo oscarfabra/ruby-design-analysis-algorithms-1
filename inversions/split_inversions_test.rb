@@ -9,16 +9,22 @@ require './split_inversions'
 # Output: Number of inversions = number of pairs (i,j) of array indices with
 # i < j and a[i] > a[j].
 #------------------------------------------------------------------------------
-class SplitInversionsTest < MiniTest::Unit::TestCase
+class SplitInversionsTest < MiniTest::Test
 
-  # Performs initializations for the tests.
+  # Performs initializations for last, main test (sort_and_count)
   def setup
     # Reads lines from file and arranges them in an array of integers
-    lines = read_lines("./data/inversions_5_1.txt")
+    lines = read_lines("./data/inversions_50_1.txt")
     @a = []
-    lines.each do |line|
-      @a << line.to_i
-    end
+    lines.each { |line| @a << line.to_i }
+
+    lines = read_lines("./data/inversions_100_1.txt")
+    @b = []
+    lines.each { |line| @b << line.to_i }
+
+    lines = read_lines("./data/IntegerArray.txt")  # Assignment case.
+    @c = []
+    lines.each { |line| @c << line.to_i }
   end
 
   # Reads lines of given file and arranges them in a list. Returns a list of
@@ -84,8 +90,19 @@ class SplitInversionsTest < MiniTest::Unit::TestCase
   end
 
   # Test that main solver method work as expected for any list of numbers.
-  #def test_sort_and_count
-    # TODO: Write test...
-  #end
+  def test_sort_and_count_inversions
+    
+    # Test case 1; 50 numbers.
+    inversions = SplitInversions.sort_and_count_inversions(@a)
+    assert_equal 590, inversions
+
+    # Test case 2; 100 numbers.
+    inversions = SplitInversions.sort_and_count_inversions(@b)
+    assert_equal 2372, inversions
+
+    # Assignment case; 100,000 numbers.
+    inversions = SplitInversions.sort_and_count_inversions(@c)
+    puts "inversions = #{inversions}."
+  end
 
 end

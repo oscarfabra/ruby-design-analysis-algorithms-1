@@ -13,8 +13,8 @@ class SplitInversions
     # of inversions of array a.
     # Params:
     # +a+:: +Array+ object to sort and count inversions for.
-    def sort_and_count(a)
-      # TODO: sort_and_count
+    def sort_and_count_inversions(a)
+      sort_and_count(a, 0, a.size - 1)
     end
 
     # Sorts array and counts inversions between given bounds. Returns the number
