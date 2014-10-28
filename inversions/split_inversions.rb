@@ -35,6 +35,6 @@ class SplitInversions
   # +mid+:: Index of last element of b.
   # +ub+:: Upper-bound index.
   def merge_and_count_split_inversions(a, b, c, lb, mid, ub)
-    
+    # TODO: Write merge method...
   end
 end

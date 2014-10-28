@@ -1,5 +1,6 @@
-require "test/unit"
-require "split_inversions"
+gem 'minitest'
+require 'minitest/autorun'
+require './split_inversions'
 
 #------------------------------------------------------------------------------
 # This class tests that split_inversions class works as expected. The split
@@ -8,11 +9,12 @@ require "split_inversions"
 # Output: Number of inversions = number of pairs (i,j) of array indices with
 # i < j and a[i] > a[j].
 #------------------------------------------------------------------------------
-class SplitInversionsTest < Test::Unit::TestCase
+class SplitInversionsTest < MiniTest::Unit::TestCase
 
   # Performs initializations for the test.
   def setup
     # Setup values...
+    # @lines = read_lines("./data/")
   end
 
   # Reads lines of given file and arranges them in a list. Returns a list of
