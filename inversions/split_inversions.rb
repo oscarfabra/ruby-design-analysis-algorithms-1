@@ -40,9 +40,9 @@ class SplitInversions
       inversions = 0
       i = 0
       j = 0
-      puts "b = #{b}, c = #{c}, lb = #{lb}, mid = #{mid}, ub = #{ub}"
+      #puts "b = #{b}, c = #{c}, lb = #{lb}, mid = #{mid}, ub = #{ub}"
       (lb..ub).each do |k|
-        puts "b[i] = #{b[i]}, c[j] = #{c[j]}, i = #{i}, j = #{j}, k = #{k}."
+        #puts "b[i] = #{b[i]}, c[j] = #{c[j]}, i = #{i}, j = #{j}, k = #{k}."
         if i >= b.size  # Nothing to add from b
           a[k] = c[j]
           j += 1

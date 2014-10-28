@@ -41,31 +41,47 @@ class SplitInversionsTest < MiniTest::Unit::TestCase
 
   # Tests that merge_and_count_split_inversions(a) method work as expected.
   def test_merge_and_count_split_inversions
+
+    # Test case 1.
     a = []
     b = [1, 3, 5]
     c = [2, 4, 6]
     inversions = 
       SplitInversions.merge_and_count_split_inversions(a, b, c, 0, 2, 5)
-    
-    # split_inversions should be 3, a should be [1, 2, 3, 4, 5, 6]
     assert_equal 3, inversions
     assert_equal [1, 2, 3, 4, 5, 6], a
 
+    # Test case 2.
     a = []
     b = [3, 4, 5]
     c = [1, 2]
     inversions = 
       SplitInversions.merge_and_count_split_inversions(a, b, c, 0, 2, 4)
-
-    # split_inversions should be 6, a should be [1, 2, 3, 4, 5]
     assert_equal 6, inversions
     assert_equal [1, 2, 3, 4, 5], a
   end
 
-  # Tests that merge_and_count_split_inversions(a,lb,ub) work as expected.
-  #def test_sort_and_count_bounded
-    # TODO: Write test...
-  #end
+  # Tests that merge_and_count_split_inversions(a, lb, ub) work as expected.
+  def test_sort_and_count_bounded
+    
+    # Test case 1; 5 numbers.
+    a = [1, 5, 3, 2, 4]
+    inversions = SplitInversions.sort_and_count(a, 0, a.size - 1)
+    assert_equal 4, inversions
+    assert_equal [1, 2, 3, 4, 5], a
+
+    # Test case 2; 5 numbers.
+    a = [5, 4, 3, 2, 1]
+    inversions = SplitInversions.sort_and_count(a, 0, a.size - 1)
+    assert_equal 4, inversions
+    assert_equal [1, 2, 3, 4, 5], a
+
+    # Test case 3; 15 numbers.
+    a = [9, 12, 3, 1, 6, 8, 2, 5, 14, 13, 11, 7, 10, 4, 0]
+    inversions = SplitInversions.sort_and_count(a, 0, a.size - 1)
+    assert_equal 56, inversions
+    assert_equal [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], a
+  end
 
   # Test that main solver method work as expected for any list of numbers.
   #def test_sort_and_count
