@@ -1,9 +1,13 @@
 #------------------------------------------------------------------------------
+# :section: SplitInversions.rb
 # Class that solves an instance of the split inversions problem, defined as 
 # follows:
 # Input: Array a containing the numbers 1, 2, 3,..., n in some arbitrary order.
 # Output: Number of inversions = number of pairs (i,j) of array indices with
 # i < j and a[i] > a[j].
+# *author*:: <a href="mailto:oscarfabra@gmail.com">Oscar Fabra</a>
+# *version*:: 1.0
+# *since*:: 28/10/2014
 #------------------------------------------------------------------------------
 class SplitInversions
 
@@ -52,9 +56,9 @@ class SplitInversions
       inversions = 0
       i = 0
       j = 0
-      #puts "b = #{b}, c = #{c}, lb = #{lb}, mid = #{mid}, ub = #{ub}"
+      # puts "b = #{b}, c = #{c}, lb = #{lb}, mid = #{mid}, ub = #{ub}"
       (lb..ub).each do |k|
-        #puts "b[i] = #{b[i]}, c[j] = #{c[j]}, i = #{i}, j = #{j}, k = #{k}."
+        # puts "b[i] = #{b[i]}, c[j] = #{c[j]}, i = #{i}, j = #{j}, k = #{k}."
         if i >= b.size  # Nothing to add from b
           a[k] = c[j]
           j += 1

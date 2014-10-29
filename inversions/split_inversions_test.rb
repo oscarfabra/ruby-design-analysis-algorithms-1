@@ -3,11 +3,15 @@ require 'minitest/autorun'
 require './split_inversions'
 
 #------------------------------------------------------------------------------
+# :section: SplitInversions.rb
 # This class tests that split_inversions class works as expected. The split
 # inversions problem is defined as follows:
 # Input: Array a containing the numbers 1, 2, 3,..., n in some arbitrary order.
 # Output: Number of inversions = number of pairs (i,j) of array indices with
 # i < j and a[i] > a[j].
+# *author*:: <a href="mailto:oscarfabra@gmail.com">Oscar Fabra</a>
+# *version*:: 1.0
+# *since*:: 28/10/2014
 #------------------------------------------------------------------------------
 class SplitInversionsTest < MiniTest::Test
 
