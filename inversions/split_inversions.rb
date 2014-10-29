@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# :section: SplitInversions.rb
+# :section: split_inversions.rb
 # Class that solves an instance of the split inversions problem, defined as 
 # follows:
 # Input: Array a containing the numbers 1, 2, 3,..., n in some arbitrary order.
@@ -79,4 +79,4 @@ class SplitInversions
 
   end  # Ends class methods
 
-end
+end  # Ends class

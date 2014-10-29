@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require './split_inversions'
 
 #------------------------------------------------------------------------------
-# :section: SplitInversions.rb
+# :section: split_inversions_test.rb
 # This class tests that split_inversions class works as expected. The split
 # inversions problem is defined as follows:
 # Input: Array a containing the numbers 1, 2, 3,..., n in some arbitrary order.
@@ -49,7 +49,7 @@ class SplitInversionsTest < MiniTest::Test
     raise ex.class, "File couldn't be read."
   end
 
-  # Tests that merge_and_count_split_inversions(a) method work as expected.
+  # Tests that merge_and_count_split_inversions(a) method works as expected.
   def test_merge_and_count_split_inversions
 
     # Test case 1.
@@ -71,7 +71,7 @@ class SplitInversionsTest < MiniTest::Test
     assert_equal [1, 2, 3, 4, 5], a
   end
 
-  # Tests that merge_and_count_split_inversions(a, lb, ub) work as expected.
+  # Tests that merge_and_count_split_inversions(a, lb, ub) works as expected.
   def test_sort_and_count_bounded
     
     # Test case 1; 5 numbers.
@@ -93,7 +93,7 @@ class SplitInversionsTest < MiniTest::Test
     assert_equal [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], a
   end
 
-  # Test that main solver method work as expected for any list of numbers.
+  # Test that main solver method works as expected for any list of numbers.
   def test_sort_and_count_inversions
     
     # Test case 1; 50 numbers.
