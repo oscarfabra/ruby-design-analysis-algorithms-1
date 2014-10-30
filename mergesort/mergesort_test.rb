@@ -66,7 +66,7 @@ class MergeSortTest < MiniTest::Test
     assert_equal [1, 2, 3, 4, 5], a
   end
 
-  # Tests that merge_and_count_split_inversions(a, lb, ub) works as expected.
+  # Tests that sort_array method works as expected.
   def test_sort_array
     
     # Test case 1; 5 numbers.
