@@ -28,10 +28,15 @@ class QuickSort
     # +pivot+:: [Optional] Symbol with the pivot to use (:first, :last, 
     #  :median_of_three). Defaults to :first.
     def sort_array(a, lb, ub, pivot = :first)
-      # TODO: Write method...
+      if lb < ub  # If lb >= ub array is already sorted
+        p_ix = partition(a, lb, ub, pivot)  # Returns index of pivot
+        sort_array(a, lb, p_ix - 1, pivot)
+        sort_array(a, p_ix + 1, ub, pivot)
+      end
     end
 
-    # Partitions a between given bounds around first element.
+    # Partitions a between given bounds around first element. Returns index of 
+    # pivot.
     # Params:
     # +a+:: +Array+ to partition.
     # +lb+:: Lower-bound index.
@@ -46,9 +51,11 @@ class QuickSort
         end
       end
       a[lb], a[i - 1] = a[i - 1], a[lb]  # Swaps elements at lb and i - 1
+      i - 1  # Returns index of pivot
     end
 
-    # Partitions a between given bounds around last element.
+    # Partitions a between given bounds around last element. Returns index of
+    # pivot.
     # Params:
     # +a+:: +Array+ to partition.
     # +lb+:: Lower-bound index.
@@ -58,7 +65,8 @@ class QuickSort
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
-    # Partitions a between given bounds using the median-of-three rule.
+    # Partitions a between given bounds using the median-of-three rule. Returns
+    # index of pivot.
     # Params:
     # +a+:: +Array+ to partition.
     # +lb+:: Lower-bound index.
@@ -100,6 +108,19 @@ class QuickSort
     def sort_array_and_count(a, lb, ub, pivot = :first)
       # TODO: Write method...
     end
+
+    private   # Private class methods
+
+      # Partitions a between lb and ub around the specified pivot.
+      def partition(a, lb, ub, pivot)
+        if pivot == :first
+          partition_first(a, lb, ub)
+        elsif pivot == :last
+          partition_last(a, lb, ub)
+        else  # pivot == :median_of_three
+          partition_median_of_three(a, lb, ub)
+        end
+      end
   end  # Ends class methods
 
 end  # Ends class

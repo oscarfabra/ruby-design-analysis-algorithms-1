@@ -53,7 +53,8 @@ class QuickSortTest < MiniTest::Test
 
     # Test case 1.
     a = [3, 8, 2, 5, 1, 4, 7, 6]
-    QuickSort.partition_first(a, 0, 7)
+    p_ix = QuickSort.partition_first(a, 0, 7)
+    assert_equal 2, p_ix
     assert_equal [1, 2, 3, 5, 8, 4, 7, 6], a
   end
 
@@ -62,7 +63,8 @@ class QuickSortTest < MiniTest::Test
 
     # Test case 1.
     a = [3, 8, 2, 5, 1, 4, 7, 6]
-    QuickSort.partition_last(a, 0, 7)
+    p_ix = QuickSort.partition_last(a, 0, 7)
+    assert_equal 5, p_ix
     assert_equal [3, 2, 5, 1, 4, 6, 7, 8], a
   end
 
@@ -71,7 +73,8 @@ class QuickSortTest < MiniTest::Test
 
     # Test case 1.
     a = [3, 8, 2, 5, 1, 4, 7, 6]
-    QuickSort.partition_median_of_three(a, 0, 7)
+    p_ix = QuickSort.partition_median_of_three(a, 0, 7)
+    assert_equal 4, p_ix
     assert_equal [4, 2, 3, 1, 5, 8, 7, 6], a
   end
   
