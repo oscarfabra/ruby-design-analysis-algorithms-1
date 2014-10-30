@@ -73,18 +73,17 @@ class QuickSort
     # +ub+:: Upper-bound index.
     def partition_median_of_three(a, lb, ub)
       mid = lb + (ub - lb)/2
-      b = [a[lb], a[mid], a[ub]]
-      min = b.min
-      max = b.max
       med_ix = 0  # Finds index of the median-of-three
-      if a[lb] != min && a[lb] != max
-        med_ix = lb
-      elsif a[ub] != min && a[ub] != max
+      if (a[lb] <= a[mid] && a[mid] <= a[ub]) || 
+        (a[ub] <= a[mid] && a[mid] <= a[lb])
+        med_ix = mid
+      elsif (a[mid] <= a[ub] && a[ub] <= a[lb]) || 
+            (a[lb] <= a[ub] && a[ub] <= a[mid])
         med_ix = ub
       else
-        med_ix = mid
+        med_ix = lb
       end
-      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements
+      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements at med_ix and lb
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
@@ -106,7 +105,15 @@ class QuickSort
     # +pivot+:: [Optional] Symbol with the pivot to use (:first, :last, 
     #  :median_of_three). Defaults to :first.
     def sort_array_and_count(a, lb, ub, pivot = :first)
-      # TODO: Write method...
+      if lb == ub  # Array is already sorted
+        0
+      else
+        x = ub - lb  # Adds the number of comparisons of upcoming partition
+        p_ix = partition(a, lb, ub, pivot)  # Returns index of pivot
+        y = sort_array_and_count(a, lb, p_ix - 1, pivot)
+        z = sort_array_and_count(a, p_ix + 1, ub, pivot)
+        x + y + z  # Returns the number of comparisons
+      end
     end
 
     private   # Private class methods
