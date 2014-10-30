@@ -71,12 +71,12 @@ class MergeSortTest < MiniTest::Test
     
     # Test case 1; 5 numbers.
     a = [5, 4, 3, 2, 1]
-    inversions = MergeSort.sort_array(a, 0, a.size - 1)
+    MergeSort.sort_array(a, 0, a.size - 1)
     assert_equal [1, 2, 3, 4, 5], a
 
     # Test case 2; 10 numbers.
     a = [3, 9, 8, 4, 6, 10, 2, 5, 7, 1]
-    inversions = MergeSort.sort_array(a, 0, a.size - 1)
+    MergeSort.sort_array(a, 0, a.size - 1)
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], a
   end
 

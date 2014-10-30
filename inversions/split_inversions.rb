@@ -68,7 +68,7 @@ class SplitInversions
         elsif b[i] <= c[j]
           a[k] = b[i]
           i += 1
-        else  # b[i] >= c[j]
+        else  # b[i] > c[j]
           a[k] = c[j]
           inversions += mid - lb + 1 - i
           j += 1
