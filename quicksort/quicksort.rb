@@ -37,7 +37,15 @@ class QuickSort
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def partition_first(a, lb, ub)
-      # TODO: Write method...
+      p = a[lb]
+      i = lb + 1
+      (lb + 1..ub).each do |j|
+        if a[j] < p
+          a[i], a[j] = a[j], a[i]  # Swaps elements at i and j
+          i += 1
+        end
+      end
+      a[lb], a[i - 1] = a[i - 1], a[lb]  # Swaps elements at lb and i - 1
     end
 
     # Partitions a between given bounds around last element.
@@ -46,7 +54,8 @@ class QuickSort
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def partition_last(a, lb, ub)
-      # TODO: Write method...
+      a[lb], a[ub] = a[ub], a[lb]  # Swaps elements at lb and ub
+      partition_first(a, lb, ub)  # Partitions around first element
     end
 
     # Partitions a between given bounds using the median-of-three rule.
@@ -55,7 +64,20 @@ class QuickSort
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def partition_median_of_three(a, lb, ub)
-      # TODO: Write method...
+      mid = lb + (ub - lb)/2
+      b = [a[lb], a[mid], a[ub]]
+      min = b.min
+      max = b.max
+      med_ix = 0  # Finds index of the median-of-three
+      if a[lb] != min && a[lb] != max
+        med_ix = lb
+      elsif a[ub] != min && a[ub] != max
+        med_ix = ub
+      else
+        med_ix = mid
+      end
+      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements
+      partition_first(a, lb, ub)  # Partitions around first element
     end
 
     # Sorts an array of numbers using quicksort. Returns the number of 
