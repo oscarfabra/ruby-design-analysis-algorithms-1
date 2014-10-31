@@ -78,22 +78,17 @@ class QuickSortTest < MiniTest::Test
     assert_equal [4, 2, 3, 1, 5, 8, 7, 6], a
   end
   
-  # Tests sort_array_first, sort_array_last and sort_array_median_of_three.
+  # Tests that sort_array method works as expected.
   def test_sort_array
     
-    # Test case 1; 5 numbers. Pivots over first element.
+    # Test case 1; 5 numbers. Pivot defaults to first element.
     a = [5, 4, 3, 2, 1]
-    QuickSort.sort_array_first(a, 0, a.size - 1)
+    QuickSort.sort_array(a, 0, a.size - 1)
     assert_equal [1, 2, 3, 4, 5], a
 
-    # Test case 2; 10 numbers. Pivots over last element.
+    # Test case 2; 10 numbers. Pivot defaults to first element.
     a = [3, 9, 8, 4, 6, 10, 2, 5, 7, 1]
-    QuickSort.sort_array_last(a, 0, a.size - 1)
-    assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], a
-
-    # Test case 2; 10 numbers. Pivots using median-of-three rule.
-    a = [3, 9, 8, 4, 6, 10, 2, 5, 7, 1]
-    QuickSort.sort_array_median_of_three(a, 0, a.size - 1)
+    QuickSort.sort_array(a, 0, a.size - 1)
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], a
   end
   
@@ -119,31 +114,28 @@ class QuickSortTest < MiniTest::Test
     assert_equal 10000, @c[9999]
   end
 
-    # Tests that sort_and_count method works as expected.
+  # Tests that sort_and_count method works as expected.
   def test_sort_and_count
-    
+
+    # Test case 1; 100 numbers. Pivot over last element.
+    count = QuickSort.sort_and_count(@a, :last)
+    assert_equal 50, @a[49]
+    assert_equal 100, @a[99]
+    assert_equal 587, count
+
+    # Test case 2; 1,000 numbers. Pivots using the median-of-three rule.
+    count = QuickSort.sort_and_count(@b, :median_of_three)
+    assert_equal 500, @b[499]
+    assert_equal 1000, @b[999]
+    assert_equal 8921, count
+
     # Test case 1; 10,000 numbers. Pivots over the first element.
+    # NOTE: Must increase RubyVM stack memory with the following command:
+    # export RUBY_THREAD_VM_STACK_SIZE=2000000
     count = QuickSort.sort_and_count(@c, :first)
     assert_equal 1000, @c[999]
     assert_equal 5000, @c[4999]
     assert_equal 10000, @c[9999]
     assert_equal 162085, count
-
-    # Test case 2; 10,000 numbers. Pivots over the last element.
-    <<-DOC
-    count = QuickSort.sort_and_count(@c, :last)
-    assert_equal 1000, @c[999]
-    assert_equal 5000, @c[4999]
-    assert_equal 10000, @c[9999]
-    assert_equal 164123, count
-
-    # Test case 3; 10,000 numbers. Pivots using the median-of-three rule.
-    count = QuickSort.sort_and_count(@c, :median_of_three)
-    assert_equal 1000, @c[999]
-    assert_equal 5000, @c[4999]
-    assert_equal 10000, @c[9999]
-    assert_equal 138382, count
-    DOC
-
   end
 end

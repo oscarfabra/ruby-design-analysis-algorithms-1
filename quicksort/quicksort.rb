@@ -46,11 +46,11 @@ class QuickSort
       i = lb + 1
       (lb + 1..ub).each do |j|
         if a[j] < p
-          a[i], a[j] = a[j], a[i]  # Swaps elements at i and j
+          swap(a, i, j)  # Swaps elements at i and j
           i += 1
         end
       end
-      a[lb], a[i - 1] = a[i - 1], a[lb]  # Swaps elements at lb and i - 1
+      swap(a, lb, i - 1)  # Swaps elements at lb and i - 1
       i - 1  # Returns index of pivot
     end
 
@@ -61,7 +61,7 @@ class QuickSort
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def partition_last(a, lb, ub)
-      a[lb], a[ub] = a[ub], a[lb]  # Swaps elements at lb and ub
+      swap(a, lb, ub)  # Swaps elements at lb and ub
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
@@ -83,7 +83,7 @@ class QuickSort
       else
         med_ix = lb
       end
-      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements at med_ix and lb
+      swap(a, lb, med_ix)  # Swaps elements at med_ix and lb
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
@@ -105,7 +105,7 @@ class QuickSort
     # +pivot+:: [Optional] Symbol with the pivot to use (:first, :last, 
     #  :median_of_three). Defaults to :first.
     def sort_array_and_count(a, lb, ub, pivot = :first)
-      if lb == ub  # Array is already sorted
+      if lb >= ub  # Array is already sorted
         0
       else
         x = ub - lb  # Adds the number of comparisons of upcoming partition
@@ -117,6 +117,13 @@ class QuickSort
     end
 
     private   # Private class methods
+
+      # Swaps elements of array a at positions i and j
+      def swap(a, i, j)
+        aux = a[i]
+        a[i] = a[j]
+        a[j] = aux
+      end
 
       # Partitions a between lb and ub around the specified pivot.
       def partition(a, lb, ub, pivot)
