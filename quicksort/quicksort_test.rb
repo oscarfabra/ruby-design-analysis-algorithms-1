@@ -129,7 +129,7 @@ class QuickSortTest < MiniTest::Test
     assert_equal 1000, @b[999]
     assert_equal 8921, count
 
-    # Test case 1; 10,000 numbers. Pivots over the first element.
+    # Test case 3; 10,000 numbers. Pivots over the first element.
     # NOTE: Must increase RubyVM stack memory with the following command:
     # export RUBY_THREAD_VM_STACK_SIZE=2000000
     count = QuickSort.sort_and_count(@c, :first)

@@ -46,11 +46,11 @@ class QuickSort
       i = lb + 1
       (lb + 1..ub).each do |j|
         if a[j] < p
-          swap(a, i, j)  # Swaps elements at i and j
+          a[i], a[j] = a[j], a[i]  # Swaps elements at i and j
           i += 1
         end
       end
-      swap(a, lb, i - 1)  # Swaps elements at lb and i - 1
+      a[lb], a[i - 1] = a[i - 1], a[lb]  # Swaps elements at lb and i - 1
       i - 1  # Returns index of pivot
     end
 
@@ -61,7 +61,7 @@ class QuickSort
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.
     def partition_last(a, lb, ub)
-      swap(a, lb, ub)  # Swaps elements at lb and ub
+      a[lb], a[ub] = a[ub], a[lb]  # Swaps elements at lb and ub
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
@@ -83,7 +83,7 @@ class QuickSort
       else
         med_ix = lb
       end
-      swap(a, lb, med_ix)  # Swaps elements at med_ix and lb
+      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements at med_ix and lb
       partition_first(a, lb, ub)  # Partitions around first element
     end
 
@@ -117,13 +117,6 @@ class QuickSort
     end
 
     private   # Private class methods
-
-      # Swaps elements of array a at positions i and j
-      def swap(a, i, j)
-        aux = a[i]
-        a[i] = a[j]
-        a[j] = aux
-      end
 
       # Partitions a between lb and ub around the specified pivot.
       def partition(a, lb, ub, pivot)
