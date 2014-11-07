@@ -16,11 +16,10 @@ class SquareMatrix
 
   # Creates a new SquareMatrix. Params:
   # +n+:: Size of a side of the SquareMatrix.
-  # +lines+:: [Optional] +Array+ of +String+ objects with the representation of
-  # the SquareMatrix.
-  def initialize(n, lines = [])
-    @table = Array.new
+  # +table+:: [Optional] +Array+ of numbers with the table for SquareMatrix.
+  def initialize(n, table = [])
     @n = n
+    @table = Array.new(table)
   end
 
   # Gets the sub-SquareMatrix that corresponds to the given quarter id. Returns 
@@ -45,10 +44,14 @@ class SquareMatrix
     # returns it. Params:
     # +lines+:: +Array+ of +String+ objects with the representation of a 
     # SquareMatrix.
-    # +lb+::
-    # +n+::
+    # +lb+:: Lower-bound index of lines to begin to read the SquareMatrix.
+    # +n+:: Size of a side of the SquareMatrix.
     def read_square_matrix(lines, lb, n)
-      
+      table = Array.new
+      lines[lb...n.to_i].each do |line|
+        table << line.split(" ").map { |s| s.to_i }
+      end
+      SquareMatrix.new(n, table)
     end
 
     # Multiplies two SquareMatrix objects and returns the product.

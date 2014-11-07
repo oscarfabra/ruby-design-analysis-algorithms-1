@@ -44,15 +44,23 @@ class SquareMatrixTest < MiniTest::Test
   # Tests that initialize works well
   def test_initialize
     x = SquareMatrix.new(@n)
+
     assert_equal x.n, @n
     assert_equal x.class, SquareMatrix
   end
 
   # Tests that read_square_matrix method works as expected.
   def test_read_square_matrix
-    # puts "n = #{@n}"
-    # puts "#{@lines}"
-    # x = SquareMatrix.read_square_matrix(0, @n, lines)
+    x = SquareMatrix.read_square_matrix(@lines, 0, @n)
+
+    # Creates auxiliary 2-D Array to compare with x.table
+    y = Array.new
+    @lines[0...@n.to_i].each do |line|
+      y << line.split(" ").map { |s| s.to_i }
+    end
+
+    assert_equal x.n, @n
+    assert_equal x.table, y
   end
 
   # Tests that to_str method works as expected.
