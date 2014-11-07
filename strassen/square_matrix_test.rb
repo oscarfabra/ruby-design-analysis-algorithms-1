@@ -20,7 +20,9 @@ class SquareMatrixTest < MiniTest::Test
     # followed by the n x n numbers of the first matrix, then the n x n numbers
     # of the second matrix.
     @lines = read_lines("./data/sm_0_8.txt")
+    @lb = 0
     @n = @lines.shift   # Gets and removes first element from array
+    @x = SquareMatrix.read_square_matrix(@lines, @lb, @n)
   end
 
   # Reads lines of given file and arranges them in an Array. Returns an array
@@ -64,8 +66,15 @@ class SquareMatrixTest < MiniTest::Test
   end
 
   # Tests that to_str method works as expected.
-  def to_str
+  def test_to_str
     
+    # Creates auxiliary string to compare with @x.to_str
+    string = ""
+    @lines[@lb.to_i...@n.to_i].each do |line|
+      string += line
+    end
+
+    assert_equal @x.to_str, string
   end
 
   # Tests that add method works as expected.

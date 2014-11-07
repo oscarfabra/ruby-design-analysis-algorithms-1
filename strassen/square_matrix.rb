@@ -35,7 +35,11 @@ class SquareMatrix
 
   # Returns a +String+ representation of this SquareMatrix.
   def to_str
-    
+    string = ""
+    table.each do |row|
+      string += row.map(&:to_s).join(" ") + "\n"
+    end
+    string
   end
 
   class << self   # Class methods
