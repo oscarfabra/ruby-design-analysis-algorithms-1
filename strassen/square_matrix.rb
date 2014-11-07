@@ -8,15 +8,19 @@
 #------------------------------------------------------------------------------
 class SquareMatrix
 
-  # Integer matrix in which to store the values
-  attr_reader table
+  # Integer 2-D array in which to store the values
+  attr_reader :table
 
   # Size of a side of the SquareMatrix
-  attr_reader n
+  attr_reader :n
 
-  # Creates a new SquareMatrix.
+  # Creates a new SquareMatrix. Params:
+  # +n+:: Size of a side of the SquareMatrix.
+  # +lines+:: [Optional] +Array+ of +String+ objects with the representation of
+  # the SquareMatrix.
   def initialize(n, lines = [])
-    
+    @table = Array.new
+    @n = n
   end
 
   # Gets the sub-SquareMatrix that corresponds to the given quarter id. Returns 
@@ -38,7 +42,11 @@ class SquareMatrix
   class << self   # Class methods
 
     # Reads an array of lines with the representation of a SquareMatrix and
-    # returns it.
+    # returns it. Params:
+    # +lines+:: +Array+ of +String+ objects with the representation of a 
+    # SquareMatrix.
+    # +lb+::
+    # +n+::
     def read_square_matrix(lines, lb, n)
       
     end

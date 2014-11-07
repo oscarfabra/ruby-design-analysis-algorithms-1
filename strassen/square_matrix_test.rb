@@ -15,10 +15,12 @@ class SquareMatrixTest < MiniTest::Test
 
   # Performs initializations for last, main test (sort)
   def setup
-    # Reads lines from file and arranges them in an array of integers
-    lines = read_lines("./data/sm_0_8.txt")
-    @a = []
-    lines.each { |line| @a << line.to_i }
+    # Reads lines from file with two square matrices of n x n dimensions. 
+    # Archive should has the following format: First line must contain n, 
+    # followed by the n x n numbers of the first matrix, then the n x n numbers
+    # of the second matrix.
+    @lines = read_lines("./data/sm_0_8.txt")
+    @n = @lines.shift   # Gets and removes first element from array
   end
 
   # Reads lines of given file and arranges them in an Array. Returns an array
@@ -39,9 +41,18 @@ class SquareMatrixTest < MiniTest::Test
     raise ex.class, "File couldn't be read."
   end
 
+  # Tests that initialize works well
+  def test_initialize
+    x = SquareMatrix.new(@n)
+    assert_equal x.n, @n
+    assert_equal x.class, SquareMatrix
+  end
+
   # Tests that read_square_matrix method works as expected.
   def test_read_square_matrix
-
+    # puts "n = #{@n}"
+    # puts "#{@lines}"
+    # x = SquareMatrix.read_square_matrix(0, @n, lines)
   end
 
   # Tests that to_str method works as expected.
