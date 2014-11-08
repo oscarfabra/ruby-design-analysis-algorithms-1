@@ -21,7 +21,7 @@ class SquareMatrixTest < MiniTest::Test
     # of the second matrix.
     @lines = read_lines("./data/sm_0_8.txt")
     @lb = 0
-    @n = @lines.shift   # Gets and removes first element from the lines array
+    @n = @lines.shift.to_i   # Gets and removes first element from the lines array
     @x = SquareMatrix.read_square_matrix(@lines, @lb, @n)
   end
 
@@ -57,19 +57,19 @@ class SquareMatrixTest < MiniTest::Test
 
     # Creates auxiliary 2-D Array to compare with x.table
     x_table = Array.new
-    @lines[0...@n.to_i].each do |line|
+    @lines[0...@n].each do |line|
       x_table << line.split(" ").map { |s| s.to_i }
     end
 
     assert_equal x.n, @n
     assert_equal x.table, x_table
 
-    lb = @lb.to_i + @n.to_i  # New lb for y
+    lb = @lb + @n  # New lb for y
     y = SquareMatrix.read_square_matrix(@lines, lb, @n)
 
     # Creates auxiliary 2-D Array to compare with y.table
     y_table = Array.new
-    @lines[lb...lb + @n.to_i].each do |line|
+    @lines[lb...lb + @n].each do |line|
       y_table << line.split(" ").map { |s| s.to_i }
     end
 
@@ -82,7 +82,7 @@ class SquareMatrixTest < MiniTest::Test
     
     # Creates auxiliary string to compare with @x.to_str
     string = ""
-    @lines[@lb.to_i...@n.to_i].each do |line|
+    @lines[@lb...@n].each do |line|
       string += line
     end
 
@@ -91,15 +91,28 @@ class SquareMatrixTest < MiniTest::Test
 
   # Tests that add method works as expected.
   def test_add
-    lb = @lb.to_i + @n.to_i
-    puts "#{@lines}"
-    puts "lb = #{lb}"
-    puts "n = #{@n}"
-    y = SquareMatrix.read_square_matrix(@lines, lb, @n)
-    puts "#{y.table}"
-    puts "#{@x.table}"
+    lb = @lb + @n
+
+    # Should throw ArgumentError if SquareMatrix objects aren't the same size
+    y = SquareMatrix.read_square_matrix(@lines, lb, @n - 1)
     z = SquareMatrix.add(@x, y)
 
+    assert_raise(SquareMatrixError) do z = SquareMatrix.add(@x, y) end
+
+    y = SquareMatrix.read_square_matrix(@lines, lb, @n)
+    z = SquareMatrix.add(@x, y)
+
+    z_table = "3 5 10 3 12 5 15 7
+7 11 11 7 9 10 9 16
+3 9 9 5 14 17 9 1
+5 7 13 2 12 4 9 7
+15 4 14 12 9 11 11 4
+6 8 4 6 7 13 6 13
+5 12 10 11 10 11 13 5
+8 12 7 9 10 7 10 13
+"
+
+    assert_equal z.to_str, z_table
   end
 
   # Tests that subtract method works as expected.

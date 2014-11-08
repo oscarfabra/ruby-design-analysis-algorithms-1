@@ -52,7 +52,7 @@ class SquareMatrix
     # +n+:: Size of a side of the SquareMatrix.
     def read_square_matrix(lines, lb, n)
       table = Array.new
-      lines[lb...lb + n.to_i].each do |line|
+      lines[lb...lb + n].each do |line|
         table << line.split(" ").map { |s| s.to_i }
       end
       SquareMatrix.new(n, table)
@@ -63,22 +63,25 @@ class SquareMatrix
       
     end
 
-    # Sums up two SquareMatrix objects and returns the result.
+    # Sums up two SquareMatrix objects and returns the resulting SquareMatrix.
     def add(x, y)
-      if x.n != y.n
-        raise ArgumentError, "The two SquareMatrix objects should be the same size."
+      begin
+        if x.n != y.n
+          raise SquareMatrixError, "The two SquareMatrix objects should be the same size."
+        end
+      rescue StandardError => ex
+        # Throws exception out of the method.
+        raise ex.class, ex.message
       end
-
-      puts x.table[0][0]
-
+      # Adds the two SquareMatrix objects
       table = Array.new
-      (0...x.n.to_i).each do |i|
+      (0...x.n).each do |i|
         table[i] = []
-        (0...x.n.to_i).each do |j|
-          table[i] << (x.table[i][j] + y.table[i][j])
+        (0...x.n).each do |j|
+          table[i][j] = x.table[i][j] + y.table[i][j]
         end
       end
-      puts "#{table}"
+      SquareMatrix.new(x.n, table)
     end
 
     # Subtracts the two SquareMatrix objects and returns the result.
@@ -101,3 +104,7 @@ class SquareMatrix
   end  # Ends class methods
 
 end  # Ends class
+
+# Error class for debugging purposes.
+class SquareMatrixError < StandardError
+end
