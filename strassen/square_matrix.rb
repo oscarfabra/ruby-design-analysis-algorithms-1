@@ -8,6 +8,12 @@
 #------------------------------------------------------------------------------
 class SquareMatrix
 
+  # Class Constants
+  UPPER_LEFT_CORNER = 1
+  UPPER_RIGHT_CORNER = 2
+  LOWER_LEFT_CORNER = 3
+  LOWER_RIGHT_CORNER = 4
+
   # Integer 2-D array in which to store the values
   attr_reader :table
 
@@ -24,12 +30,39 @@ class SquareMatrix
 
   # Gets the sub-SquareMatrix that corresponds to the given quarter id. Returns 
   # the corresponding SquareMatrix.
-  def get_sub_square_matrix(x, s)
+  # +quarter+:: Id of the n/2 * n/2 quarter to get. Could be any of the four 
+  # class constants.
+  def get_sub_square_matrix(quarter)
+    row = 0
+    col = 0
+    r = (@n % 2 == 1)? 1 : 0   # Whether n is odd
     
+    case quarter
+    when UPPER_LEFT_CORNER
+      row = 0; col = 0
+    when UPPER_RIGHT_CORNER
+      row = 0; col = @n/2 + r # Bigger quarters will be the ones on the left...
+    when LOWER_LEFT_CORNER
+      row = @n/2 + r; col = 0
+    when LOWER_RIGHT_CORNER
+      row = @n/2 + r; col = @n/2 + r  #...and the upper positions
+    end
+
+    # Obtains the corresponding SquareMatrix of the given quarter
+    table = Array.new
+    (row...row + @n/2 + r).each do |i|
+      table[i - row] = []
+      (col...col + @n/2 + r).each do |j|
+        table[i - row][j - col] = @table[i][j]  # this table at indices i and j
+      end
+    end
+    SquareMatrix.new(@n/2 + r, table)  # Returns the SquareMatrix
   end
 
   # Puts the given SquareMatrix in the given quarter id of this SquareMatrix.
-  def put_sub_square_matrix(x, s)
+  # +x+:: SquareMatrix to put. Should be of size n/2 * n/2.
+  # +quarter+:: 
+  def put_sub_square_matrix(x, quarter)
     
   end
 
@@ -37,7 +70,7 @@ class SquareMatrix
   def to_str
     string = ""
     table.each do |row|
-      string += row.map(&:to_s).join(" ") + "\n"
+      string += row.map(&:to_s).join(" ").strip + "\n"
     end
     string
   end
@@ -55,7 +88,7 @@ class SquareMatrix
       lines[lb...lb + n].each do |line|
         table << line.split(" ").map { |s| s.to_i }
       end
-      SquareMatrix.new(n, table)
+      SquareMatrix.new(n, table)  # Returns the SquareMatrix
     end
 
     # Multiplies two SquareMatrix objects and returns the product.
@@ -92,7 +125,7 @@ class SquareMatrix
           table[i][j] = x.table[i][j] - y.table[i][j]
         end
       end
-      SquareMatrix.new(x.n, table)      
+      SquareMatrix.new(x.n, table)  # Returns the SquareMatrix
     end
 
     private   # Private class methods
@@ -104,6 +137,8 @@ class SquareMatrix
 
       # Computes the 7 products according to Strassen's Algorithm and returns
       # the resulting matrix.
+      # +p1+::
+      # +p2+::
       def compute_products(p1, p2, p3, p4, p5, p6, p7, n)
         
       end
