@@ -21,7 +21,7 @@ class SquareMatrixTest < MiniTest::Test
     # of the second matrix.
     @lines = read_lines("./data/sm_0_8.txt")
     @lb = 0
-    @n = @lines.shift   # Gets and removes first element from array
+    @n = @lines.shift   # Gets and removes first element from the lines array
     @x = SquareMatrix.read_square_matrix(@lines, @lb, @n)
   end
 
@@ -56,13 +56,25 @@ class SquareMatrixTest < MiniTest::Test
     x = SquareMatrix.read_square_matrix(@lines, 0, @n)
 
     # Creates auxiliary 2-D Array to compare with x.table
-    y = Array.new
+    x_table = Array.new
     @lines[0...@n.to_i].each do |line|
-      y << line.split(" ").map { |s| s.to_i }
+      x_table << line.split(" ").map { |s| s.to_i }
     end
 
     assert_equal x.n, @n
-    assert_equal x.table, y
+    assert_equal x.table, x_table
+
+    lb = @lb.to_i + @n.to_i  # New lb for y
+    y = SquareMatrix.read_square_matrix(@lines, lb, @n)
+
+    # Creates auxiliary 2-D Array to compare with y.table
+    y_table = Array.new
+    @lines[lb...lb + @n.to_i].each do |line|
+      y_table << line.split(" ").map { |s| s.to_i }
+    end
+
+    assert_equal y.n, @n
+    assert_equal y.table, y_table
   end
 
   # Tests that to_str method works as expected.
@@ -79,6 +91,14 @@ class SquareMatrixTest < MiniTest::Test
 
   # Tests that add method works as expected.
   def test_add
+    lb = @lb.to_i + @n.to_i
+    puts "#{@lines}"
+    puts "lb = #{lb}"
+    puts "n = #{@n}"
+    y = SquareMatrix.read_square_matrix(@lines, lb, @n)
+    puts "#{y.table}"
+    puts "#{@x.table}"
+    z = SquareMatrix.add(@x, y)
 
   end
 

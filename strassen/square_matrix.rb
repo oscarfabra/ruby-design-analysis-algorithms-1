@@ -52,7 +52,7 @@ class SquareMatrix
     # +n+:: Size of a side of the SquareMatrix.
     def read_square_matrix(lines, lb, n)
       table = Array.new
-      lines[lb...n.to_i].each do |line|
+      lines[lb...lb + n.to_i].each do |line|
         table << line.split(" ").map { |s| s.to_i }
       end
       SquareMatrix.new(n, table)
@@ -65,7 +65,20 @@ class SquareMatrix
 
     # Sums up two SquareMatrix objects and returns the result.
     def add(x, y)
-      
+      if x.n != y.n
+        raise ArgumentError, "The two SquareMatrix objects should be the same size."
+      end
+
+      puts x.table[0][0]
+
+      table = Array.new
+      (0...x.n.to_i).each do |i|
+        table[i] = []
+        (0...x.n.to_i).each do |j|
+          table[i] << (x.table[i][j] + y.table[i][j])
+        end
+      end
+      puts "#{table}"
     end
 
     # Subtracts the two SquareMatrix objects and returns the result.
