@@ -23,9 +23,13 @@ class SquareMatrix
   # Creates a new SquareMatrix. Params:
   # +n+:: Size of a side of the SquareMatrix.
   # +table+:: [Optional] +Array+ of numbers with the table for SquareMatrix.
-  def initialize(n, table = [])
+  def initialize(n, table = nil)
     @n = n
-    @table = Array.new(table)
+    if table == nil
+      @table = Array.new(n)
+    else
+      @table = Array.new(table)
+    end
   end
 
   # Gets the sub-SquareMatrix that corresponds to the given quarter id. Returns 
@@ -51,9 +55,9 @@ class SquareMatrix
     # Obtains the corresponding SquareMatrix of the given quarter
     table = Array.new
     (row...row + @n/2 + r).each do |i|
-      table[i - row] = []
+      table[i - row] = Array.new(@n/2 + r)
       (col...col + @n/2 + r).each do |j|
-        table[i - row][j - col] = @table[i][j]  # this table at indices i and j
+        table[i - row][j - col] = @table[i][j]  # this table at indices i, j
       end
     end
     SquareMatrix.new(@n/2 + r, table)  # Returns the SquareMatrix
@@ -63,7 +67,31 @@ class SquareMatrix
   # +x+:: SquareMatrix to put. Should be of size n/2 * n/2.
   # +quarter+:: 
   def put_sub_square_matrix(x, quarter)
+    if x.n != @n
+      raise ArgumentError, "Given SquareMatrix should be same size as this one."
+    end
+
+    row = 0; col = 0
+    r = (@n % 2 == 1)? 1 : 0   # Whether n is odd
     
+    case quarter
+    when UPPER_LEFT_CORNER
+      row = 0; col = 0
+    when UPPER_RIGHT_CORNER
+      row = 0; col = @n/2 + r # Bigger quarters will be the ones on the left...
+    when LOWER_LEFT_CORNER
+      row = @n/2 + r; col = 0
+    when LOWER_RIGHT_CORNER
+      row = @n/2 + r; col = @n/2 + r  #...and the upper positions
+    end
+
+    # Puts the corresponding values of x in the given quarter of this table
+    (row...row + @n/2 + r).each do |i|
+      @table[i] = Array.new(@n/2 + r) if @table[i] == nil
+      (col...col + @n/2 + r).each do |j|
+        @table[i][j] = x.table[i][j]  # given table at indices i, j
+      end
+    end
   end
 
   # Returns a +String+ representation of this SquareMatrix.

@@ -166,7 +166,44 @@ class SquareMatrixTest < MiniTest::Test
   
   # Tests that put_sub_square_matrix method works as expected.
   def test_put_sub_square_matrix
-    
+
+    # Puts the quarters of @x in y (@x was read in setup)
+    y = SquareMatrix.new(@x.n)
+    y.put_sub_square_matrix(@x,SquareMatrix::UPPER_LEFT_CORNER)
+    y.put_sub_square_matrix(@x,SquareMatrix::UPPER_RIGHT_CORNER)
+    y.put_sub_square_matrix(@x,SquareMatrix::LOWER_LEFT_CORNER)
+    y.put_sub_square_matrix(@x,SquareMatrix::LOWER_RIGHT_CORNER)
+
+    # Gets each of the quarters of SquareMatrix y
+    a = y.get_sub_square_matrix(SquareMatrix::UPPER_LEFT_CORNER)
+    b = y.get_sub_square_matrix(SquareMatrix::UPPER_RIGHT_CORNER)
+    c = y.get_sub_square_matrix(SquareMatrix::LOWER_LEFT_CORNER)
+    d = y.get_sub_square_matrix(SquareMatrix::LOWER_RIGHT_CORNER)
+
+    a_table = "2 3 5 1
+4 6 9 2
+2 5 6 3
+3 4 7 1
+"
+    b_table = "8 4 9 3
+5 7 3 9
+8 8 9 0
+8 3 9 3
+"
+    c_table = "8 3 6 9
+5 7 2 5
+4 7 3 9
+6 7 3 6
+"
+    d_table = "3 6 7 1
+4 9 5 7
+2 8 4 4
+8 3 5 7
+"
+    assert_equal a.to_str, a_table
+    assert_equal b.to_str, b_table
+    assert_equal c.to_str, c_table
+    assert_equal d.to_str, d_table
   end
 
   # Tests that compute_products method works as expected.
