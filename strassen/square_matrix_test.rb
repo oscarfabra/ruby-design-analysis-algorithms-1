@@ -93,12 +93,6 @@ class SquareMatrixTest < MiniTest::Test
   def test_add
     lb = @lb + @n
 
-    # Should throw ArgumentError if SquareMatrix objects aren't the same size
-    y = SquareMatrix.read_square_matrix(@lines, lb, @n - 1)
-    z = SquareMatrix.add(@x, y)
-
-    assert_raise(SquareMatrixError) do z = SquareMatrix.add(@x, y) end
-
     y = SquareMatrix.read_square_matrix(@lines, lb, @n)
     z = SquareMatrix.add(@x, y)
 
@@ -117,7 +111,22 @@ class SquareMatrixTest < MiniTest::Test
 
   # Tests that subtract method works as expected.
   def test_subtract
+    lb = @lb + @n
 
+    y = SquareMatrix.read_square_matrix(@lines, lb, @n)
+    z = SquareMatrix.subtract(@x, y)
+
+    z_table = "1 1 0 -1 4 3 3 -1
+1 1 7 -3 1 4 -3 2
+1 1 3 1 2 -1 9 -1
+1 1 1 0 4 2 9 -1
+1 2 -2 6 -3 1 3 -2
+4 6 0 4 1 5 4 1
+3 2 -4 7 -6 5 -5 3
+4 2 -1 3 6 -1 0 1
+"
+
+    assert_equal z.to_str, z_table
   end
 
   # Tests that compute_products method works as expected.

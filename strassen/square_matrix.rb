@@ -65,13 +65,8 @@ class SquareMatrix
 
     # Sums up two SquareMatrix objects and returns the resulting SquareMatrix.
     def add(x, y)
-      begin
-        if x.n != y.n
-          raise SquareMatrixError, "The two SquareMatrix objects should be the same size."
-        end
-      rescue StandardError => ex
-        # Throws exception out of the method.
-        raise ex.class, ex.message
+      if x.n != y.n
+        raise ArgumentError, "The two SquareMatrix objects should be the same size."
       end
       # Adds the two SquareMatrix objects
       table = Array.new
@@ -86,7 +81,18 @@ class SquareMatrix
 
     # Subtracts the two SquareMatrix objects and returns the result.
     def subtract(x, y)
-      
+      if x.n != y.n
+        raise ArgumentError, "The two SquareMatrix objects should be the same size."
+      end
+      # Adds the two SquareMatrix objects
+      table = Array.new
+      (0...x.n).each do |i|
+        table[i] = []
+        (0...x.n).each do |j|
+          table[i][j] = x.table[i][j] - y.table[i][j]
+        end
+      end
+      SquareMatrix.new(x.n, table)      
     end
 
     private   # Private class methods
@@ -104,7 +110,3 @@ class SquareMatrix
   end  # Ends class methods
 
 end  # Ends class
-
-# Error class for debugging purposes.
-class SquareMatrixError < StandardError
-end
