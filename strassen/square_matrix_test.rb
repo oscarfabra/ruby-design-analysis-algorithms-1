@@ -208,7 +208,33 @@ class SquareMatrixTest < MiniTest::Test
 
   # Tests that compute_products method works as expected.
   def test_compute_products
+
+    # Pre-calculated values for the 7 products
+    p1_table = [[-18, 24], [-36, 48]]
+    p2_table = [[99, 12], [189, 24]]
+    p3_table = [[104, 88], [105, 75]]
+    p4_table = [[9, 12], [3, 24]]
+    p5_table = [[220, 92], [285, 114]]
+    p6_table = [[-51, -20], [-17, -10]]
+    p7_table = [[-16, -32], [33, 39]]
+
+    # Initializes the corresponding SquareMatrix objects
+    p1 = SquareMatrix.new(2, p1_table)
+    p2 = SquareMatrix.new(2, p2_table)
+    p3 = SquareMatrix.new(2, p3_table)
+    p4 = SquareMatrix.new(2, p4_table)
+    p5 = SquareMatrix.new(2, p5_table)
+    p6 = SquareMatrix.new(2, p6_table)
+    p7 = SquareMatrix.new(2, p7_table)
+
+    z = SquareMatrix.compute_products(p1, p2, p3, p4, p5, p6, p7, 4)
     
+    z_table = "79 72 81 36
+150 136 153 72
+113 100 114 60
+108 99 111 48
+"
+    assert_equal z.to_str, z_table
   end
 
   # Tests that strassens_multiplication method works as expected.

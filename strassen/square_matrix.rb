@@ -160,15 +160,46 @@ class SquareMatrix
 
       # Multiplies the two given SquareMatrix objects and returns the result.
       def strassens_multiplication(x, y, n)
-        
+        if n == 2
+          m = SquareMatrix.new(n)
+          m.table[0][0] = x.table[0][0] * y.table[0][0] + x.table[0][1] * y.table[1][0]
+          m.table[0][1] = x.table[0][0] * y.table[0][1] + x.table[0][1] * y.table[1][1]
+          m.table[1][0] = x.table[1][0] * y.table[0][0] + x.table[1][1] * y.table[1][0]
+          m.table[1][1] = x.table[1][0] * y.table[0][1] + x.table[1][1] * y.table[1][1]
+          m
+        end
+
+          # Gets sub-SquareMatrix objects
+          a = x.get_sub_square_matrix(SquareMatrix::UPPER_LEFT_CORNER)
+          b = x.get_sub_square_matrix(SquareMatrix::UPPER_RIGHT_CORNER)
+          c = x.get_sub_square_matrix(SquareMatrix::LOWER_LEFT_CORNER)
+          d = x.get_sub_square_matrix(SquareMatrix::LOWER_RIGHT_CORNER)
+          e = y.get_sub_square_matrix(SquareMatrix::UPPER_LEFT_CORNER)
+          f = y.get_sub_square_matrix(SquareMatrix::UPPER_RIGHT_CORNER)
+          g = y.get_sub_square_matrix(SquareMatrix::LOWER_LEFT_CORNER)
+          h = y.get_sub_square_matrix(SquareMatrix::LOWER_RIGHT_CORNER)
+
+          # Recursively computes the 7 products
+          p1 = strassens_multiplication(a, subtract(f,h), n/2)
+          p2 = strassens_multiplication(add(a,b), h, n/2)
+          p3 = strassens_multiplication(add(c,d), e, n/2)
+          p4 = strassens_multiplication(d, subtract(g,e), n/2)
+          p5 = strassens_multiplication(add(a,d), add(e,h), n/2)
+          p6 = strassens_multiplication(subtract(b,d), add(g,h), n/2)
+          p7 = strassens_multiplication(subtract(a,c), add(e,f), n/2)
+
+          compute_products(p1, p2, p3, p4, p5, p6, p7, n)
       end
 
       # Computes the 7 products according to Strassen's Algorithm and returns
       # the resulting matrix.
-      # +p1+::
-      # +p2+::
       def compute_products(p1, p2, p3, p4, p5, p6, p7, n)
-        
+        m = SquareMatrix.new(n)
+        m.put_sub_square_matrix(subtract(add(add(p5,p4),p6),p2), UPPER_LEFT_CORNER)
+        m.put_sub_square_matrix(add(p1, p2), UPPER_RIGHT_CORNER)
+        m.put_sub_square_matrix(add(p3, p4), LOWER_LEFT_CORNER)
+        m.put_sub_square_matrix(subtract(subtract(add(p1,p5),p3),p7), LOWER_RIGHT_CORNER)
+        m
       end
   end  # Ends class methods
 
