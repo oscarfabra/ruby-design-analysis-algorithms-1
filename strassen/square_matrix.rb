@@ -58,9 +58,8 @@ class SquareMatrix
     end
 
     # Obtains the corresponding SquareMatrix of the given quarter
-    table = Array.new
+    table = Array.new(@n/2 + r) { |i| i = Array.new(@n/2 + r) }
     (row...row + @n/2 + r).each do |i|
-      table[i - row] = Array.new(@n/2 + r)
       (col...col + @n/2 + r).each do |j|
         table[i - row][j - col] = @table[i][j]  # this table at indices i, j
       end
@@ -129,7 +128,7 @@ class SquareMatrix
 
     # Multiplies two SquareMatrix objects and returns the product.
     def multiply(x, y)
-      
+      strassens_multiplication(x, y, x.n)
     end
 
     # Sums up two SquareMatrix objects and returns the resulting SquareMatrix.
@@ -164,7 +163,7 @@ class SquareMatrix
       SquareMatrix.new(x.n, table)  # Returns the SquareMatrix
     end
 
-    #private   # Private class methods
+    private   # Private class methods. Comment this line in order to test them.
 
       # Multiplies the two given SquareMatrix objects and returns the result.
       def strassens_multiplication(x, y, n)
@@ -174,29 +173,29 @@ class SquareMatrix
           m.table[0][1] = x.table[0][0] * y.table[0][1] + x.table[0][1] * y.table[1][1]
           m.table[1][0] = x.table[1][0] * y.table[0][0] + x.table[1][1] * y.table[1][0]
           m.table[1][1] = x.table[1][0] * y.table[0][1] + x.table[1][1] * y.table[1][1]
-          m
+          return m
         end
 
-          # Gets sub-SquareMatrix objects
-          a = x.get_sub_square_matrix(SquareMatrix::UPPER_LEFT_CORNER)
-          b = x.get_sub_square_matrix(SquareMatrix::UPPER_RIGHT_CORNER)
-          c = x.get_sub_square_matrix(SquareMatrix::LOWER_LEFT_CORNER)
-          d = x.get_sub_square_matrix(SquareMatrix::LOWER_RIGHT_CORNER)
-          e = y.get_sub_square_matrix(SquareMatrix::UPPER_LEFT_CORNER)
-          f = y.get_sub_square_matrix(SquareMatrix::UPPER_RIGHT_CORNER)
-          g = y.get_sub_square_matrix(SquareMatrix::LOWER_LEFT_CORNER)
-          h = y.get_sub_square_matrix(SquareMatrix::LOWER_RIGHT_CORNER)
+        # Gets sub-SquareMatrix objects
+        a = x.get_sub_square_matrix(UPPER_LEFT_CORNER)
+        b = x.get_sub_square_matrix(UPPER_RIGHT_CORNER)
+        c = x.get_sub_square_matrix(LOWER_LEFT_CORNER)
+        d = x.get_sub_square_matrix(LOWER_RIGHT_CORNER)
+        e = y.get_sub_square_matrix(UPPER_LEFT_CORNER)
+        f = y.get_sub_square_matrix(UPPER_RIGHT_CORNER)
+        g = y.get_sub_square_matrix(LOWER_LEFT_CORNER)
+        h = y.get_sub_square_matrix(LOWER_RIGHT_CORNER)
 
-          # Recursively computes the 7 products
-          p1 = strassens_multiplication(a, subtract(f,h), n/2)
-          p2 = strassens_multiplication(add(a,b), h, n/2)
-          p3 = strassens_multiplication(add(c,d), e, n/2)
-          p4 = strassens_multiplication(d, subtract(g,e), n/2)
-          p5 = strassens_multiplication(add(a,d), add(e,h), n/2)
-          p6 = strassens_multiplication(subtract(b,d), add(g,h), n/2)
-          p7 = strassens_multiplication(subtract(a,c), add(e,f), n/2)
+        # Recursively computes the 7 products
+        p1 = strassens_multiplication(a, subtract(f,h), n/2)
+        p2 = strassens_multiplication(add(a,b), h, n/2)
+        p3 = strassens_multiplication(add(c,d), e, n/2)
+        p4 = strassens_multiplication(d, subtract(g,e), n/2)
+        p5 = strassens_multiplication(add(a,d), add(e,h), n/2)
+        p6 = strassens_multiplication(subtract(b,d), add(g,h), n/2)
+        p7 = strassens_multiplication(subtract(a,c), add(e,f), n/2)
 
-          compute_products(p1, p2, p3, p4, p5, p6, p7, n)
+        compute_products(p1, p2, p3, p4, p5, p6, p7, n)
       end
 
       # Computes the 7 products according to Strassen's Algorithm and returns
