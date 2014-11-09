@@ -106,13 +106,13 @@ class QuickSort
     #  :median_of_three). Defaults to :first.
     def sort_array_and_count(a, lb, ub, pivot = :first)
       if lb >= ub  # Array is already sorted
-        0
+        return 0
       else
         x = ub - lb  # Adds the number of comparisons of upcoming partition
         p_ix = partition(a, lb, ub, pivot)  # Returns index of pivot
         y = sort_array_and_count(a, lb, p_ix - 1, pivot)
         z = sort_array_and_count(a, p_ix + 1, ub, pivot)
-        x + y + z  # Returns the number of comparisons
+        return x + y + z  # Returns the number of comparisons
       end
     end
 
