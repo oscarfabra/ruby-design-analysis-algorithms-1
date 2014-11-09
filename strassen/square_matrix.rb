@@ -26,7 +26,7 @@ class SquareMatrix
   def initialize(n, table = nil)
     @n = n
     if table == nil
-      @table = Array.new(n)
+      @table = Array.new(n) { |i| i = Array.new(n) }
     else
       @table = Array.new(table)
     end
@@ -37,6 +37,11 @@ class SquareMatrix
   # +quarter+:: Id of the n/2 * n/2 quarter to get. Could be any of the four 
   # class constants.
   def get_sub_square_matrix(quarter)
+    if quarter != UPPER_LEFT_CORNER && quarter != UPPER_RIGHT_CORNER && 
+      quarter != LOWER_LEFT_CORNER && quarter != LOWER_RIGHT_CORNER
+      raise ArgumentError, "Invalid quarter argument."        
+    end
+
     row = 0
     col = 0
     r = (@n % 2 == 1)? 1 : 0   # Whether n is odd
@@ -67,8 +72,11 @@ class SquareMatrix
   # +x+:: SquareMatrix to put. Should be of size n/2 * n/2.
   # +quarter+:: 
   def put_sub_square_matrix(x, quarter)
-    if x.n != @n
-      raise ArgumentError, "Given SquareMatrix should be same size as this one."
+    if x.n != @n/2
+      raise ArgumentError, "Given SquareMatrix should have dimensions n/2 * n/2"
+    elsif quarter != UPPER_LEFT_CORNER && quarter != UPPER_RIGHT_CORNER && 
+      quarter != LOWER_LEFT_CORNER && quarter != LOWER_RIGHT_CORNER
+      raise ArgumentError, "Invalid quarter argument."        
     end
 
     row = 0; col = 0
@@ -89,7 +97,7 @@ class SquareMatrix
     (row...row + @n/2 + r).each do |i|
       @table[i] = Array.new(@n/2 + r) if @table[i] == nil
       (col...col + @n/2 + r).each do |j|
-        @table[i][j] = x.table[i][j]  # given table at indices i, j
+        @table[i][j] = x.table[i - row][j - col]  # given table at indices i, j
       end
     end
   end
@@ -156,7 +164,7 @@ class SquareMatrix
       SquareMatrix.new(x.n, table)  # Returns the SquareMatrix
     end
 
-    private   # Private class methods
+    #private   # Private class methods
 
       # Multiplies the two given SquareMatrix objects and returns the result.
       def strassens_multiplication(x, y, n)
@@ -195,10 +203,12 @@ class SquareMatrix
       # the resulting matrix.
       def compute_products(p1, p2, p3, p4, p5, p6, p7, n)
         m = SquareMatrix.new(n)
-        m.put_sub_square_matrix(subtract(add(add(p5,p4),p6),p2), UPPER_LEFT_CORNER)
+        m.put_sub_square_matrix(subtract(add(add(p5,p4),p6),p2), 
+          UPPER_LEFT_CORNER)
         m.put_sub_square_matrix(add(p1, p2), UPPER_RIGHT_CORNER)
         m.put_sub_square_matrix(add(p3, p4), LOWER_LEFT_CORNER)
-        m.put_sub_square_matrix(subtract(subtract(add(p1,p5),p3),p7), LOWER_RIGHT_CORNER)
+        m.put_sub_square_matrix(subtract(subtract(add(p1,p5),p3),p7), 
+          LOWER_RIGHT_CORNER)
         m
       end
   end  # Ends class methods
