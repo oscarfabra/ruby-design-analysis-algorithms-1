@@ -69,7 +69,8 @@ class SquareMatrix
 
   # Puts the given SquareMatrix in the given quarter id of this SquareMatrix.
   # +x+:: SquareMatrix to put. Should be of size n/2 * n/2.
-  # +quarter+:: 
+  # +quarter+:: Id of the n/2 * n/2 quarter to get. Could be any of the four 
+  # class constants.
   def put_sub_square_matrix(x, quarter)
     if x.n != @n/2
       raise ArgumentError, "Given SquareMatrix should have dimensions n/2 * n/2"

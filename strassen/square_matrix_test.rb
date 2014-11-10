@@ -13,19 +13,19 @@ require './square_matrix'
 #------------------------------------------------------------------------------
 class SquareMatrixTest < MiniTest::Test
 
-  # Performs initializations for last, main test (sort)
+  # Performs initializations for the tests.
   def setup
     # Reads lines from file with two square matrices of n x n dimensions. 
-    # Archive should has the following format: First line must contain n, 
+    # Archive should have the following format: First line must contain n, 
     # followed by the n x n numbers of the first matrix, then the n x n numbers
     # of the second matrix.
     @lines = read_lines("./data/sm_0_8.txt")
     @lb = 0
-    @n = @lines.shift.to_i   # Gets and removes first element from the lines array
+    @n = @lines.shift.to_i   # Gets and removes first element from lines array
     @x = SquareMatrix.read_square_matrix(@lines, @lb, @n)
   end
 
-  # Reads lines of given file and arranges them in an Array. Returns an array
+  # Reads lines of given file and arranges them in an +Array+. Returns an array
   # of +String+ objects with the values for the problem. Throws exception if 
   # file couldn't be read.
   # Params:
