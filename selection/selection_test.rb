@@ -48,6 +48,16 @@ class SelectionTest < MiniTest::Test
     raise ex.class, "File couldn't be read."
   end
 
+  # Tests that choose_random_pivot method works as expected
+  def test_choose_random_pivot
+    
+    # Test case 1.
+    a = [3, 8, 2, 5, 1, 4, 7, 6]
+    p = Selection.choose_random_pivot(a, a.size)
+
+    assert_equal true, a.include?(p)
+  end
+
   # Tests that partition_first method works as expected.
   def test_partition_first
 
@@ -56,26 +66,6 @@ class SelectionTest < MiniTest::Test
     p_ix = Selection.partition_first(a, 0, 7)
     assert_equal 2, p_ix
     assert_equal [1, 2, 3, 5, 8, 4, 7, 6], a
-  end
-
-  # Tests that partition_last method works as expected.
-  def test_partition_last
-
-    # Test case 1.
-    a = [3, 8, 2, 5, 1, 4, 7, 6]
-    p_ix = Selection.partition_last(a, 0, 7)
-    assert_equal 5, p_ix
-    assert_equal [3, 2, 5, 1, 4, 6, 7, 8], a
-  end
-
-  # Tests that partition_median_of_three method works as expected.
-  def test_partition_median_of_three
-
-    # Test case 1.
-    a = [3, 8, 2, 5, 1, 4, 7, 6]
-    p_ix = Selection.partition_median_of_three(a, 0, 7)
-    assert_equal 4, p_ix
-    assert_equal [4, 2, 3, 1, 5, 8, 7, 6], a
   end
   
   # Tests that r_select_bounded method works as expected.

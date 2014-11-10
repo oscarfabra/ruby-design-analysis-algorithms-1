@@ -15,10 +15,8 @@ class Selection
     # Finds and returns the ith order statistic of a given array of numbers.
     # Params:
     # +a+:: +Array+ of numbers, unsorted.
-    # +i+:: Order statistic to search of, i in {1, 2,..., a.size}
-    # +pivot+:: [Optional] Symbol with the pivot to use (:first, :last, 
-    #  :median_of_three). Defaults to :first.
-    def r_select(a, i, pivot = :first)
+    # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
+    def r_select(a, i)
       # TODO: Define method.
     end
 
@@ -26,11 +24,20 @@ class Selection
     # Params:
     # +a+:: +Array+ of numbers, unsorted.
     # +n+:: Size of the array.
-    # +i+:: Order statistic to search of, i in {1, 2,..., a.size}
-    # +pivot+:: [Optional] Symbol with the pivot to use (:first, :last, 
-    #  :median_of_three). Defaults to :first.
-    def r_select_bounded(a, n, i, pivot = :first)
-      # TODO: Define method.
+    # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
+    def r_select_bounded(a, n, i)
+      if n == 1
+        return a[i - 1]
+      end
+      p = choose_random_pivot(a, n)   # Chooses a pivot uniformly at random
+      j = partition_first(a, 0, n - 1)
+      if j == i
+        return p
+      elsif j > i
+        return r_select_bounded(a[0..(j - 1)], j, i)
+      else
+        return r_select_bounded(a[(j + 1)..(n - 1)], n - j - 1, i - j)
+      end
     end
 
     # Partitions a between given bounds around first element. Returns index of 
@@ -52,51 +59,13 @@ class Selection
       i - 1  # Returns index of pivot
     end
 
-    # Partitions a between given bounds around last element. Returns index of
-    # pivot.
-    # Params:
-    # +a+:: +Array+ to partition.
-    # +lb+:: Lower-bound index.
-    # +ub+:: Upper-bound index.
-    def partition_last(a, lb, ub)
-      a[lb], a[ub] = a[ub], a[lb]  # Swaps elements at lb and ub
-      partition_first(a, lb, ub)  # Partitions around first element
+    # Chooses a random pivot from a, uniformly at random and swaps it with
+    # element at position 0. Returns the element to pivot at.
+    def choose_random_pivot(a, n)
+      p_ix = rand(n)
+      a[p_ix], a[0] = a[0], a[p_ix]
+      a[p_ix]
     end
-
-    # Partitions a between given bounds using the median-of-three rule. Returns
-    # index of pivot.
-    # Params:
-    # +a+:: +Array+ to partition.
-    # +lb+:: Lower-bound index.
-    # +ub+:: Upper-bound index.
-    def partition_median_of_three(a, lb, ub)
-      mid = lb + (ub - lb)/2
-      med_ix = 0  # Finds index of the median-of-three
-      if (a[lb] <= a[mid] && a[mid] <= a[ub]) || 
-        (a[ub] <= a[mid] && a[mid] <= a[lb])
-        med_ix = mid
-      elsif (a[mid] <= a[ub] && a[ub] <= a[lb]) || 
-            (a[lb] <= a[ub] && a[ub] <= a[mid])
-        med_ix = ub
-      else
-        med_ix = lb
-      end
-      a[lb], a[med_ix] = a[med_ix], a[lb]  # Swaps elements at med_ix and lb
-      partition_first(a, lb, ub)  # Partitions around first element
-    end
-
-    private   # Private class methods
-
-      # Partitions a between lb and ub around the specified pivot.
-      def partition(a, lb, ub, pivot)
-        if pivot == :first
-          partition_first(a, lb, ub)
-        elsif pivot == :last
-          partition_last(a, lb, ub)
-        else  # pivot == :median_of_three
-          partition_median_of_three(a, lb, ub)
-        end
-      end
   end  # Ends class methods
 
 end  # Ends class
