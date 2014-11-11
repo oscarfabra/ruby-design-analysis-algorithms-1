@@ -17,26 +17,28 @@ class Selection
     # +a+:: +Array+ of numbers, unsorted.
     # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
     def r_select(a, i)
-      # TODO: Define method.
+      r_select_bounded(a, a.size, i)
     end
 
     # Finds and returns the ith order statistic of a given array of numbers.
     # Params:
     # +a+:: +Array+ of numbers, unsorted.
-    # +n+:: Size of the array.
+    # +n+:: Size of the array. n = a.size.
     # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
     def r_select_bounded(a, n, i)
       if n == 1
-        return a[i - 1]
+        return a[0]
       end
       p = choose_random_pivot(a, n)   # Chooses a pivot uniformly at random
       j = partition_first(a, 0, n - 1)
-      if j == i
+      puts "i = #{i}, p = #{p}, j = #{j}"
+      puts "a = #{a}"
+      if j == (i - 1)
         return p
-      elsif j > i
+      elsif j > (i - 1)
         return r_select_bounded(a[0..(j - 1)], j, i)
       else
-        return r_select_bounded(a[(j + 1)..(n - 1)], n - j - 1, i - j)
+        return r_select_bounded(a[(j + 1)..(n - 1)], n - j - 1, i - j - 1)
       end
     end
 
