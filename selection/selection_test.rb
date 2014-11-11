@@ -96,30 +96,30 @@ class SelectionTest < MiniTest::Test
   def test_r_select
 
     # Test case 1; 100 numbers.
-    #i = Selection.r_select(@a, 10)
-    #j = Selection.r_select(@a, 50)
-    #k = Selection.r_select(@a, 75)
+    i = Selection.r_select(@a, 10)
+    j = Selection.r_select(@a, 50)
+    k = Selection.r_select(@a, 75)
 
-    #assert_equal 10, i
-    #assert_equal 50, j
-    #assert_equal 75, k
+    assert_equal 10, i
+    assert_equal 50, j
+    assert_equal 75, k
 
     # Test case 2; 1,000 numbers.
-    #i = Selection.r_select(@b, 100)
-    #j = Selection.r_select(@b, 500)
-    #k = Selection.r_select(@b, 750)
+    i = Selection.r_select(@b, 100)
+    j = Selection.r_select(@b, 500)
+    k = Selection.r_select(@b, 750)
     
-    #assert_equal 100, i
-    #assert_equal 500, j
-    #assert_equal 750, k
+    assert_equal 100, i
+    assert_equal 500, j
+    assert_equal 750, k
 
     # Test case 3; 10,000 numbers.
-    #i = Selection.r_select(@c, 1000)
-    #j = Selection.r_select(@c, 5000)
-    #k = Selection.r_select(@c, 7500)
+    i = Selection.r_select(@c, 1000)
+    j = Selection.r_select(@c, 5000)
+    k = Selection.r_select(@c, 7500)
     
-    #assert_equal 1000, i
-    #assert_equal 5000, j
-    #assert_equal 7500, k
+    assert_equal 1000, i
+    assert_equal 5000, j
+    assert_equal 7500, k
   end
 end

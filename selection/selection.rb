@@ -29,18 +29,8 @@ class Selection
       if n == 1
         return a[i]
       end
-      puts "a = #{a}"
-      puts "Choosing pivot..."
       p = choose_random_pivot(a, n)   # Chooses a pivot uniformly at random
-      puts "p = #{p} (Pivot)"
-      puts "a = #{a}"
-      puts "Partitioning around pivot..."
       j = partition_first(a, 0, n - 1)
-      puts "j = #{j} (New index of pivot)"
-      puts "i = #{i} (Index of order statistic to search for)"
-      puts "n = #{n} (Size of array)"
-      puts "a = #{a}"
-      puts "-" * 10
       if j == i
         return p
       elsif j > i
