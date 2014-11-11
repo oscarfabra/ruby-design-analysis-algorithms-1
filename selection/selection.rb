@@ -17,25 +17,27 @@ class Selection
     # +a+:: +Array+ of numbers, unsorted.
     # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
     def r_select(a, i)
-      r_select_bounded(a, a.size, i)
+      r_select_bounded(a, a.size, i - 1)
     end
 
     # Finds and returns the ith order statistic of a given array of numbers.
     # Params:
     # +a+:: +Array+ of numbers, unsorted.
     # +n+:: Size of the array. n = a.size.
-    # +i+:: Order statistic to search for, i in {1, 2,..., a.size}
+    # +i+:: Index of order statistic to search for, i in {0, 1,..., n - 1}
     def r_select_bounded(a, n, i)
       if n == 1
-        return a[0]
+        return a[i]
       end
+      puts "a = #{a}"
       p = choose_random_pivot(a, n)   # Chooses a pivot uniformly at random
       j = partition_first(a, 0, n - 1)
       puts "i = #{i}, p = #{p}, j = #{j}"
       puts "a = #{a}"
-      if j == (i - 1)
+      puts "-" * 10
+      if j == i
         return p
-      elsif j > (i - 1)
+      elsif j > i
         return r_select_bounded(a[0..(j - 1)], j, i)
       else
         return r_select_bounded(a[(j + 1)..(n - 1)], n - j - 1, i - j - 1)
@@ -43,8 +45,7 @@ class Selection
     end
 
     # Partitions a between given bounds around first element. Returns index of 
-    # pivot.
-    # Params:
+    # pivot. Params:
     # +a+:: +Array+ to partition.
     # +lb+:: Lower-bound index.
     # +ub+:: Upper-bound index.

@@ -54,12 +54,13 @@ class SelectionTest < MiniTest::Test
     # Test case 1.
     a = [3, 8, 2, 5, 1, 4, 7, 6]
     p = Selection.choose_random_pivot(a, a.size)
-    q = Selection.choose_random_pivot(a, a.size)
-    r = Selection.choose_random_pivot(a, a.size)
+    assert_equal a[0], p
 
-    assert_equal true, a.include?(p)
-    assert_equal true, a.include?(q)
-    assert_equal true, a.include?(r)
+    q = Selection.choose_random_pivot(a, a.size)
+    assert_equal a[0], q
+
+    r = Selection.choose_random_pivot(a, a.size)
+    assert_equal a[0], r
   end
 
   # Tests that partition_first method works as expected.
@@ -75,17 +76,17 @@ class SelectionTest < MiniTest::Test
   # Tests that r_select_bounded method works as expected.
   def test_r_select_bounded
     
-    # Test case 1; 5 numbers.
+    # Test case 1; 5 numbers. Third argument is an index in {0..n-1}.
     a = [5, 4, 3, 2, 1]
-    i = Selection.r_select_bounded(a, a.size, 4)
+    i = Selection.r_select_bounded(a, a.size, 3)
     j = Selection.r_select_bounded(a, a.size, 2)
     assert_equal 4, i
-    assert_equal 2, j
+    assert_equal 3, j
 
     # Test case 2; 10 numbers.
     a = [3, 11, 8, 4, 6, 13, 2, 5, 7, 1]
-    i = Selection.r_select_bounded(a, a.size, 9)
-    j = Selection.r_select_bounded(a, a.size, 10)
+    i = Selection.r_select_bounded(a, a.size, 8)
+    j = Selection.r_select_bounded(a, a.size, 9)
 
     assert_equal 11, i
     assert_equal 13, j
