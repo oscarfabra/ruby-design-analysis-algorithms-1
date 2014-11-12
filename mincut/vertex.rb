@@ -14,24 +14,34 @@ class Vertex
 
   # Initializes a new Vertex.
   def initialize
-    # TODO: Write method.
+    @bag = Array.new
+    @id = @@next_id
+    @@next_id += 1
   end
 
   # Clones a given Vertex.
   def clone(vertex)
-    # TODO: Write method.
+    @bag = Array.new(vertex.bag)
+    @id = vertex.id
   end
 
   # Tells whether the current vertex includes the given vertex id.
   def include?(v_id)
-    
+    return true if v_id == @id
+    @bag.each do |i|
+      return true if i == v_id
+    end
+    return false
   end
 
   class << self   # Class methods.
 
-    # Merges the vertices with the given Vertex objects.
+    # Merges the vertices with given Vertex objects. Returns the new Vertex.
     def merge_vertices(v, w)
-      # TODO: Write method.
+      vertex = Vertex.new
+      vertex.bag += v.bag
+      vertex.bag += w.bag
+      vertex
     end
   end  # Ends class methods
 
