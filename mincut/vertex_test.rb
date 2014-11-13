@@ -89,17 +89,21 @@ class VertexTest < MiniTest::Test
 
   # Tests that clone method works as expected.
   def test_clone
-    <<-DOC
     a = Vertex.new
     b = Vertex.new
     c = Vertex.merge(a, b)
     d = Vertex.merge(c, a)
 
     c.clone(d)
+
+    # All results should be the same for c and d
     assert_equal 4, c.id
-    assert_equal [1, 2, 3], c.bag
+    assert_equal true, c.include?(1)
+    assert_equal true, c.include?(2)
+    assert_equal true, c.include?(3)
     assert_equal 4, d.id
-    assert_equal [1, 2, 3], d.bag
-    DOC
+    assert_equal true, d.include?(1)
+    assert_equal true, d.include?(2)
+    assert_equal true, d.include?(3)
   end
 end
