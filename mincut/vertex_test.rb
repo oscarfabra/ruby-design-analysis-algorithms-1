@@ -19,7 +19,19 @@ class VertexTest < MiniTest::Test
 
   # Tests that initialize method works as expected.
   def test_initialize
-    # TODO: Write method.
+    a = Vertex.new
+    b = Vertex.new
+    c = Vertex.new
+
+    # Id was correctly assigned and can be accessed
+    assert_equal 1, a.id
+    assert_equal 2, b.id
+    assert_equal 3, c.id
+
+    # Bag was correctly created and can be accessed
+    assert_equal [], a.bag
+    assert_equal [], b.bag
+    assert_equal [], c.bag
   end
 
   # Tests that clone method works as expected.

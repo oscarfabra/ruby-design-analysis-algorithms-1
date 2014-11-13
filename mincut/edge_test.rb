@@ -14,7 +14,7 @@ class EdgeTest < MiniTest::Test
 
   # Performs initializations for tests
   def setup
-    # Nothing to do.
+    # Nothing to do here.
   end
 
   # Tests that initialize method works as expected.
