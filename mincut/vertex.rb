@@ -34,14 +34,25 @@ class Vertex
     return false
   end
 
+  # Adds the id and bag of given Vertex to this object's bag array.
+  def add(v)
+    @bag << v.id
+    @bag += bag
+  end
+
   class << self   # Class methods.
 
-    # Merges the vertices with given Vertex objects. Returns the new Vertex.
-    def merge_vertices(v, w)
+    # Merges the given Vertex objects. Returns the new Vertex.
+    def merge(v, w)
       vertex = Vertex.new
-      vertex.bag += v.bag
-      vertex.bag += w.bag
+      vertex.add(v)
+      vertex.add(w)
       vertex
+    end
+
+    # Assigns a value to next_id class variable (for testing purposes mainly).
+    def next_id=(i)
+      @@next_id = i
     end
   end  # Ends class methods
 
