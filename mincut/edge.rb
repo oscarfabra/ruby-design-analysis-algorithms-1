@@ -19,7 +19,7 @@ class Edge
   def initialize(v_id, w_id)
     @v_id = v_id
     @w_id = w_id
-    @id = @@next_id;
+    @id = @@next_id
     @@next_id += 1
   end
 end  # Ends class
