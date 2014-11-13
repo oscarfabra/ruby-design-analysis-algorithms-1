@@ -35,21 +35,56 @@ class VertexTest < MiniTest::Test
     assert_equal [], c.bag
   end
 
-    # Tests that merge_vertices method works as expected.
-  def test_merge_vertices
+  # Tests that add method works as expected.
+  def test_add
+    a = Vertex.new
+    b = Vertex.new
+    c = Vertex.new
+
+    a.add(b)
+    assert_equal [2], a.bag
+
+    a.add(c)
+    assert_equal [2, 3], a.bag    
+  end
+
+  # Tests that include? method works as expected.
+  def test_include?
+    a = Vertex.new
+    b = Vertex.new
+    c = Vertex.new
+
+    a.add(b)
+    assert_equal [2], a.bag
+    assert_equal true, a.include?(1)  # Its own id
+    assert_equal true, a.include?(2)  # ID of b
+    assert_equal false, a.include?(3)  # Not included.
+
+    a.add(c)
+    assert_equal [2, 3], a.bag 
+    assert_equal true, a.include?(1)  # Its own id
+    assert_equal true, a.include?(2)  # ID of b
+    assert_equal true, a.include?(3)  # ID of c
+  end
+
+    # Tests that merge method works as expected.
+  def test_merge
     a = Vertex.new  # a.id should be 4
     b = Vertex.new  # b.id should be 5
 
-    assert_equal [], a.bag
-    assert_equal [], b.bag
-
     c = Vertex.merge(a, b)
-    assert_equal 3, c.id  # @@next_id class variable continues growing
-    #assert_equal [1, 2], c.bag
+    assert_equal 3, c.id
+    assert_equal true, c.include?(1)
+    assert_equal true, c.include?(2)
+    assert_equal true, c.include?(3)
+    assert_equal false, c.include?(4)
 
     d = Vertex.merge(c, a)
     assert_equal 4, d.id
-    #assert_equal [1, 2, 3], d.bag
+    assert_equal true, d.include?(1)
+    assert_equal true, d.include?(2)
+    assert_equal true, d.include?(3)
+    assert_equal true, d.include?(4)
   end
 
   # Tests that clone method works as expected.
@@ -66,10 +101,5 @@ class VertexTest < MiniTest::Test
     assert_equal 4, d.id
     assert_equal [1, 2, 3], d.bag
     DOC
-  end
-
-  # Tests that include? method works as expected.
-  def test_include?
-    # TODO: Write method.
   end
 end

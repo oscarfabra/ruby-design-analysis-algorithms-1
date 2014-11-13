@@ -37,7 +37,7 @@ class Vertex
   # Adds the id and bag of given Vertex to this object's bag array.
   def add(v)
     @bag << v.id
-    @bag += bag
+    @bag += v.bag
   end
 
   class << self   # Class methods.
@@ -45,8 +45,8 @@ class Vertex
     # Merges the given Vertex objects. Returns the new Vertex.
     def merge(v, w)
       vertex = Vertex.new
-      vertex.add(v)
-      vertex.add(w)
+      vertex.add(v) if !vertex.include?(v.id)
+      vertex.add(w) if !vertex.include?(w.id)
       vertex
     end
 
