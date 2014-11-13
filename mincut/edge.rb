@@ -22,4 +22,12 @@ class Edge
     @id = @@next_id
     @@next_id += 1
   end
+
+  class << self  # Class methods
+
+    # Assigns a value to next_id class variable (for testing purposes mainly).
+    def next_id=(i)
+      @@next_id = i
+    end
+  end
 end  # Ends class

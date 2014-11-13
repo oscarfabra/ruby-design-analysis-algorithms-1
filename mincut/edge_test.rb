@@ -14,7 +14,8 @@ class EdgeTest < MiniTest::Test
 
   # Performs initializations for tests
   def setup
-    # Nothing to do here.
+    # Initializes class variable to 1 for test.
+    Edge.next_id = 1
   end
 
   # Tests that initialize method works as expected.
