@@ -43,16 +43,6 @@ class Graph
     @m = @E.size
   end
 
-  # Gets the edges incident to the given vertex.
-  def get_incident_edges(v_id)
-    # TODO: Write method.
-  end
-
-  # Gets the vertex with the given id.
-  def get_vertex(v_id)
-    # TODO: Write method.
-  end
-
   # Merges the vertices with the given ids.
   def merge_vertices(v_id, w_id)
     # TODO: Write method.

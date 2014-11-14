@@ -162,23 +162,13 @@ class GraphTest < MiniTest::Test
     assert_equal vertex_edges, g.vertex_edges
   end
 
-  # Tests that add method works as expected.
-  #def test_get_vertex
+  # Tests that merge_vertices method works as expected.
+  def test_merge_vertices
     # TODO: Write test.
-  #end
-
-  # Tests that add method works as expected.
-  #def test_get_adjacency_list
-    # TODO: Write test.
-  #end
-
-  # Tests that merge method works as expected.
-  #def test_merge_vertices
-    # TODO: Write test.
-  #end
+  end
 
   # Tests that remove_self_loops method works as expected.
-  #def test_remove_self_loops
+  def test_remove_self_loops
     # TODO: Write test.
-  #end
+  end
 end
