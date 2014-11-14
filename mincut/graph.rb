@@ -52,7 +52,7 @@ class Graph
 
   # Merges the endpoints of given edge into a single vertex and removes edge.
   # *Pre:*:: edge is in @E.
-  def merge!(edge)
+  def merge!(edge_id)
     # TODO: Write method.
 
   end

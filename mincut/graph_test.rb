@@ -175,18 +175,17 @@ class GraphTest < MiniTest::Test
   end
 
   # Tests that merge method works as expected.
-  def test_merge
+  def test_merge!
 
     # Test case 1, using @a
-    <<-DOC
     Vertex.next_id = 1
     Edge.next_id = 1
     vertex_edges = Graph.build_adjacency_list(@a)
     g = Graph.new(vertex_edges)
 
-    edge = g.vertex_edges[1][1];  # Takes and merges the second edge
-    e_id = e.id  # Saves the edge id for coming asserttions
-    g.merge!(e)
+    # Takes and merges the second edge of vertex 1
+    edge_id = g.vertex_edges[1][1]
+    g.merge!(edge_id)
 
     assert_equal 3, g.n
     assert_equal 4, g.m
@@ -197,15 +196,12 @@ class GraphTest < MiniTest::Test
 
     edge_ids = []
     g.E.each { |e| edge_ids << e.id }
-    assert_equal [1, 3, 4, 5], edge_ids  # edge 2 exists no more
+    assert_equal [1, 3, 4, 5], edge_ids  # Edge 2 exists no more
 
-    vertex_edge_ids = []  # vertex_edges hash shouldn't contain the edge now
-    g.vertex_edges.each do |k, v|
-      v.each do |edge_id|
-        assert_not_equal 
-      end
+    # Edge 2 should not be present for any vertex
+    g.vertex_edges.each do |key, values|
+      assert_equal true, !g.vertex_edges[key].include?(edge_id)
     end
-    DOC
   end
 
   # Tests that remove_self_loops method works as expected.
