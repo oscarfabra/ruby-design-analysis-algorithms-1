@@ -16,12 +16,31 @@ class Graph
   attr_reader :E  # Array of edges
   attr_reader :vertex_edges  # Maps vertices with their adjacent edges
 
-  # Initializes a new Graph object. Params:
-  # +n+:: Number of vertices.
+  # Initializes a new Graph object. 
+  # *Pre:*:: Graph is connected (each vertex has at least one adjacent edge).
+  # Params:
   # +vertex_edges+:: Hash with pairs (k, v) where k is the id of each vertex,
   # and v is an array of the ids of its adjacent edges.
-  def initialize(n, vertex_edges)
-    # TODO: Write method.
+  def initialize(vertex_edges)
+    # Initializes set of vertices
+    @n = vertex_edges.size
+    @V = []
+    n.times do
+      v = Vertex.new
+      @V << v
+    end
+    # Initializes vertex_edges Hash
+    @vertex_edges = vertex_edges.clone
+    # Initializes set of edges
+    @E = []
+    @vertex_edges.each do |k, v|
+      v.each do |edge|
+        if Graph.find_edge(@E, edge.v_id, edge.w_id) == nil
+          @E << edge
+        end
+      end
+    end
+    @m = @E.size
   end
 
   # Gets the edges incident to the given vertex.
