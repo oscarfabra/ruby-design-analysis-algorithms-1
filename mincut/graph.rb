@@ -46,11 +46,40 @@ class Graph
 
   class << self   # Class methods.
 
-    # Gets the corresponding adjacency list from the given list of Strings.
+    # Builds the corresponding adjacency list from the given list of Strings.
     # Returns a hash with (key, value) pairs where key is the id of a vertex,
     # and value is an array of the ids of its adjacent edges.
-    def get_adjacency_list(lines)
-      # TODO: Write method.
+    def build_adjacency_list(lines)
+      adj = {}
+      x = []  # List of edges already added 
+      lines.each do |line|
+        a = []
+        a += line.split(" ").map { |s| s.to_i }
+        key = a.shift  # Gets id of key vertex
+
+        values = []
+        a.each do |v_id|
+          # Finds and returns edge if it exists.
+          if (e = find_edge(x, key, v_id)) == nil
+            e = Edge.new(key, v_id)
+            x << e
+          end
+          values << e
+        end
+
+        adj[key] = values  # Adds values to key        
+      end
+      adj  # Returns the adjacency list
+    end
+
+    # Finds and returns edge with given endpoints from x taking into account 
+    # that this is an undirected graph. Returns nil if not included.
+    def find_edge(x, v_id, w_id)
+      x.each do |e|
+        return e if (e.v_id == v_id && e.w_id == w_id) || 
+          (e.v_id == w_id && e.w_id == v_id)
+      end
+      nil
     end
   end  # Ends class methods
 

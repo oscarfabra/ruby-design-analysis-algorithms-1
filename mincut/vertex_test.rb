@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require './vertex'
 
 #------------------------------------------------------------------------------
-# :section: edge_test.rb
+# :section: vertex_test.rb
 # This class tests that Vertex class works as expected. Vertex represents a
 # vertex or node of the Graph class.
 # *author*:: <a href="mailto:oscarfabra@gmail.com">Oscar Fabra</a>

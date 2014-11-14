@@ -1,7 +1,7 @@
 gem 'minitest'
 require 'minitest/autorun'
-require './vertex'
-require './edge'
+#require './vertex'
+#require './edge'
 require './graph'
 
 #------------------------------------------------------------------------------
@@ -20,17 +20,9 @@ class GraphTest < MiniTest::Test
     Edge.next_id = 1
 
     # Reads lines from file and arranges them in an array of integers
-    lines = read_lines("./data/MinCut_4_1.txt")
-    @a = []
-    lines.each { |line| @a << line.to_i }
-
-    lines = read_lines("./data/MinCut_8_1.txt")
-    @b = []
-    lines.each { |line| @b << line.to_i }
-
-    lines = read_lines("./data/MinCut_8_2.txt")  # Assignment case.
-    @c = []
-    lines.each { |line| @c << line.to_i }
+    @a = read_lines("./data/MinCut_4_1.txt")
+    @b = read_lines("./data/MinCut_8_1.txt")
+    @c = read_lines("./data/MinCut_8_2.txt")
   end
 
   # Reads lines of given file and arranges them in a list. Returns a list of
@@ -51,33 +43,65 @@ class GraphTest < MiniTest::Test
     raise ex.class, "File couldn't be read."
   end
 
-  # Tests that get_adjacency_list method works as expected.
-  def test_get_adjacency_list
-    # TODO: Write test.
+  # Tests that build_adjacency_list method works as expected.
+  def test_build_adjacency_list
+    vertex_edges = Graph.build_adjacency_list(@a)
+
+    # Asserts number of adjacent edges for each id
+    assert_equal 2, vertex_edges[1].size
+    assert_equal 3, vertex_edges[2].size
+    assert_equal 3, vertex_edges[3].size
+    assert_equal 2, vertex_edges[4].size
+
+    # Verifies adjacency lists with pre-calculated edge ids
+    edge_ids = []
+    vertex_edges[1].each do |e|
+      edge_ids << e.id
+    end
+    assert_equal [1, 2], edge_ids
+
+    edge_ids = []
+    vertex_edges[2].each do |e|
+      edge_ids << e.id
+    end
+    assert_equal [1, 3, 4], edge_ids
+
+    edge_ids = []
+    vertex_edges[3].each do |e|
+      edge_ids << e.id
+    end
+    assert_equal [2, 3, 5], edge_ids
+
+    edge_ids = []
+    vertex_edges[4].each do |e|
+      edge_ids << e.id
+    end
+    assert_equal [4, 5], edge_ids
   end
 
   # Tests that initialize method works as expected.
-  def test_initialize
+  #def test_initialize
     # TODO: Write test.
-  end
+    #assert_equal true, false
+  #end
 
   # Tests that add method works as expected.
-  def test_get_vertex
+  #def test_get_vertex
     # TODO: Write test.
-  end
+  #end
 
   # Tests that add method works as expected.
-  def test_get_adjacency_list
+  #def test_get_adjacency_list
     # TODO: Write test.
-  end
+  #end
 
   # Tests that merge method works as expected.
-  def test_merge_vertices
+  #def test_merge_vertices
     # TODO: Write test.
-  end
+  #end
 
   # Tests that remove_self_loops method works as expected.
-  def test_remove_self_loops
+  #def test_remove_self_loops
     # TODO: Write test.
-  end
+  #end
 end
