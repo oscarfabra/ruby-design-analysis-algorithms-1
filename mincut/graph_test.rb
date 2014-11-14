@@ -16,7 +16,7 @@ class GraphTest < MiniTest::Test
   # Performs initializations for tests
   def setup
 
-    # Reads lines from file and arranges them in an array of integers
+    # Reads lines from files and arranges them in arrays of Strings
     @a = read_lines("./data/MinCut_4_1.txt")
     @b = read_lines("./data/MinCut_8_1.txt")
     @c = read_lines("./data/MinCut_8_2.txt")
@@ -140,7 +140,13 @@ class GraphTest < MiniTest::Test
     g.E.each { |e| edge_ids << e.id }
     assert_equal [1, 2, 3, 4, 5], edge_ids
 
-    assert_equal vertex_edges, g.vertex_edges
+    vertex_edges.each do |key, values|
+      edge_ids = []
+      values.each do |edge|
+        edge_ids << edge.id
+      end
+      assert_equal g.vertex_edges[key], edge_ids  # ids should be equal
+    end
 
     # Test case 2, using @b
     Vertex.next_id = 1
@@ -159,12 +165,47 @@ class GraphTest < MiniTest::Test
     g.E.each { |e| edge_ids << e.id }
     assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], edge_ids
 
-    assert_equal vertex_edges, g.vertex_edges
+    vertex_edges.each do |key, values|
+      edge_ids = []
+      values.each do |edge|
+        edge_ids << edge.id
+      end
+      assert_equal g.vertex_edges[key], edge_ids  # ids should be equal
+    end
   end
 
-  # Tests that merge_vertices method works as expected.
-  def test_merge_vertices
-    # TODO: Write test.
+  # Tests that merge method works as expected.
+  def test_merge
+
+    # Test case 1, using @a
+    <<-DOC
+    Vertex.next_id = 1
+    Edge.next_id = 1
+    vertex_edges = Graph.build_adjacency_list(@a)
+    g = Graph.new(vertex_edges)
+
+    edge = g.vertex_edges[1][1];  # Takes and merges the second edge
+    e_id = e.id  # Saves the edge id for coming asserttions
+    g.merge!(e)
+
+    assert_equal 3, g.n
+    assert_equal 4, g.m
+
+    vertex_ids = []
+    g.V.each { |v| vertex_ids << v.id }
+    assert_equal [2, 4, 5], vertex_ids  # 1 and 3 should've been merged in 5
+
+    edge_ids = []
+    g.E.each { |e| edge_ids << e.id }
+    assert_equal [1, 3, 4, 5], edge_ids  # edge 2 exists no more
+
+    vertex_edge_ids = []  # vertex_edges hash shouldn't contain the edge now
+    g.vertex_edges.each do |k, v|
+      v.each do |edge_id|
+        assert_not_equal 
+      end
+    end
+    DOC
   end
 
   # Tests that remove_self_loops method works as expected.

@@ -29,12 +29,19 @@ class Graph
       v = Vertex.new
       @V << v
     end
-    # Initializes vertex_edges Hash
-    @vertex_edges = vertex_edges.clone
+    # Initializes vertex_edges Hash (same as given param but adding only edge 
+    # ids instead of full Edge objects)
+    @vertex_edges = {}
+    vertex_edges.each do |key, values|
+      @vertex_edges[key] = []
+      values.each do |edge|
+        @vertex_edges[key] << edge.id
+      end
+    end
     # Initializes set of edges
     @E = []
-    @vertex_edges.each do |k, v|
-      v.each do |edge|
+    vertex_edges.each do |key, values|
+      values.each do |edge|
         if Graph.find_edge(@E, edge.v_id, edge.w_id) == nil
           @E << edge
         end
@@ -43,9 +50,11 @@ class Graph
     @m = @E.size
   end
 
-  # Merges the vertices with the given ids.
-  def merge_vertices(v_id, w_id)
+  # Merges the endpoints of given edge into a single vertex and removes edge.
+  # *Pre:*:: edge is in @E.
+  def merge!(edge)
     # TODO: Write method.
+
   end
 
   # Removes self-loops of given vertex, if any.
