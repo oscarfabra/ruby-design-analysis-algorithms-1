@@ -3,7 +3,8 @@ require './vertex'
 
 #------------------------------------------------------------------------------
 # :section: graph.rb
-# Represents an undirected graph with n vertices and m edges.
+# Represents an undirected graph with n vertices and m edges. Class is 
+# optimized for speed rather than memory.
 # *author*:: <a href="mailto:oscarfabra@gmail.com">Oscar Fabra</a>
 # *version*:: 1.0
 # *since*:: 11/11/2014
@@ -12,8 +13,8 @@ class Graph
 
   attr_reader :n  # Number of vertices
   attr_reader :m  # Number of edges
-  attr_reader :V  # Array of vertices
-  attr_reader :E  # Array of edges
+  attr_reader :V  # Maps vertex id's with their respective vertices
+  attr_reader :E  # Maps edge id's with their respective edges
   attr_reader :vertex_edges  # Maps vertices with their adjacent edges
 
   # Initializes a new Graph object. 
@@ -22,12 +23,12 @@ class Graph
   # +vertex_edges+:: Hash with pairs (k, v) where k is the id of each vertex,
   # and v is an array of the ids of its adjacent edges.
   def initialize(vertex_edges)
-    # Initializes set of vertices
+    # Initializes the hash of vertices
     @n = vertex_edges.size
-    @V = []
+    @V = {}
     n.times do
       v = Vertex.new
-      @V << v
+      @V[v.id] = v
     end
     # Initializes vertex_edges Hash (same as given param but adding only edge 
     # ids instead of full Edge objects)
@@ -38,12 +39,12 @@ class Graph
         @vertex_edges[key] << edge.id
       end
     end
-    # Initializes set of edges
-    @E = []
+    # Initializes the hash of edges
+    @E = {}
     vertex_edges.each do |key, values|
       values.each do |edge|
-        if Graph.find_edge(@E, edge.v_id, edge.w_id) == nil
-          @E << edge
+        if Graph.find_edge(@E.values, edge.v_id, edge.w_id) == nil
+          @E[edge.id] = edge
         end
       end
     end
@@ -51,7 +52,7 @@ class Graph
   end
 
   # Merges the endpoints of given edge into a single vertex and removes edge.
-  # *Pre:*:: edge is in @E.
+  # *Pre:*:: edge with given id is in @E.
   def merge!(edge_id)
     # TODO: Write method.
 

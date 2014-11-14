@@ -132,13 +132,8 @@ class GraphTest < MiniTest::Test
     assert_equal 4, g.n
     assert_equal 5, g.m
 
-    vertex_ids = []
-    g.V.each { |v| vertex_ids << v.id }
-    assert_equal [1, 2, 3, 4], vertex_ids
-
-    edge_ids = []
-    g.E.each { |e| edge_ids << e.id }
-    assert_equal [1, 2, 3, 4, 5], edge_ids
+    assert_equal [1, 2, 3, 4], g.V.keys
+    assert_equal [1, 2, 3, 4, 5], g.E.keys
 
     vertex_edges.each do |key, values|
       edge_ids = []
@@ -157,13 +152,8 @@ class GraphTest < MiniTest::Test
     assert_equal 8, g.n
     assert_equal 14, g.m
 
-    vertex_ids = []
-    g.V.each { |v| vertex_ids << v.id }
-    assert_equal [1, 2, 3, 4, 5, 6, 7, 8], vertex_ids
-
-    edge_ids = []
-    g.E.each { |e| edge_ids << e.id }
-    assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], edge_ids
+    assert_equal [1, 2, 3, 4, 5, 6, 7, 8], g.V.keys
+    assert_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], g.E.keys
 
     vertex_edges.each do |key, values|
       edge_ids = []
@@ -178,6 +168,7 @@ class GraphTest < MiniTest::Test
   def test_merge!
 
     # Test case 1, using @a
+    <<-DOC
     Vertex.next_id = 1
     Edge.next_id = 1
     vertex_edges = Graph.build_adjacency_list(@a)
@@ -202,6 +193,7 @@ class GraphTest < MiniTest::Test
     g.vertex_edges.each do |key, values|
       assert_equal true, !g.vertex_edges[key].include?(edge_id)
     end
+    DOC
   end
 
   # Tests that remove_self_loops method works as expected.
