@@ -1,7 +1,7 @@
 gem 'minitest'
 require 'minitest/autorun'
-#require './vertex'
-#require './edge'
+require './vertex'
+require './edge'
 require './graph'
 
 #------------------------------------------------------------------------------
@@ -173,9 +173,13 @@ class GraphTest < MiniTest::Test
     vertex_edges = Graph.build_adjacency_list(@a)
     g = Graph.new(vertex_edges)
 
-    # Takes and merges the second edge of vertex 1
-    edge_id = g.vertex_edges[1][1]
-    g.merge!(edge_id)
+    # Takes and merges edge with id 2
+    edge = g.E[2]
+    pointed_edges = []  # Builds expected pointed_edges
+    pointed_edges += g.vertex_edges[edge.v_id]
+    pointed_edges += g.vertex_edges[edge.w_id]
+    pointed_edges.delete(edge.id)
+    g.merge!(edge.id)
 
     assert_equal 3, g.n
     assert_equal 4, g.m
@@ -185,8 +189,31 @@ class GraphTest < MiniTest::Test
 
     # Edge 2 should not be present for any vertex
     g.vertex_edges.each do |key, values|
-      assert_equal true, !g.vertex_edges[key].include?(edge_id)
+      assert_equal true, !g.vertex_edges[key].include?(edge.id)
     end
+
+    # Edges that were pointed by merged vertices now should be pointed by the 
+    # new vertex
+    assert_equal nil, g.vertex_edges[edge.v_id]
+    assert_equal nil, g.vertex_edges[edge.w_id]
+    assert_equal pointed_edges, g.vertex_edges[5]
+
+    # ...now take and merge edge with id 1
+    <<-DOC
+    edge = g.E[1]
+    g.merge!(edge.id)
+
+    assert_equal 2, g.n
+    assert_equal 3, g.m
+
+    assert_equal [4, 6], g.V.keys  # Vertices 1,3 should've been merged in 5
+    assert_equal [3, 4, 5], g.E.keys  # Edge 2 shouldn't exist now
+
+    # Edge 2 should not be present for any vertex
+    g.vertex_edges.each do |key, values|
+      assert_equal true, !g.vertex_edges[key].include?(edge.id)
+    end
+    DOC
   end
 
   # Tests that remove_self_loops method works as expected.

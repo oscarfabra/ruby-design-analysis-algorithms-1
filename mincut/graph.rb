@@ -68,6 +68,14 @@ class Graph
     vertex_edges.each do |key, values|
       @vertex_edges[key].delete(edge.id)
     end
+
+    # Updates vertex_edges
+    pointed_edges = []
+    pointed_edges += @vertex_edges[edge.v_id]
+    pointed_edges += @vertex_edges[edge.w_id]
+    @vertex_edges.delete(edge.v_id)
+    @vertex_edges.delete(edge.w_id)
+    @vertex_edges[vertex.id] = pointed_edges
   end
 
   # Removes self-loops of given vertex, if any.
