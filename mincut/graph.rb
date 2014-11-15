@@ -54,8 +54,20 @@ class Graph
   # Merges the endpoints of given edge into a single vertex and removes edge.
   # *Pre:*:: edge with given id is in @E.
   def merge!(edge_id)
-    # TODO: Write method.
+    edge = @E.delete(edge_id)  # Gets and removes edge with given id
+    @m = @E.size
 
+    v = @V.delete(edge.v_id)  # Gets and removes vertex
+    w = @V.delete(edge.w_id)  # Gets and removes vertex
+    vertex = Vertex.merge(v,w)  # Merges vertices of given edge
+    
+    @V[vertex.id] = vertex  # Adds new vertex to @V
+    @n = @V.size
+
+    # Removes all appearances of edge from vertex_edges
+    vertex_edges.each do |key, values|
+      @vertex_edges[key].delete(edge.id)
+    end
   end
 
   # Removes self-loops of given vertex, if any.
