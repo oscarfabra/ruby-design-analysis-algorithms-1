@@ -179,12 +179,13 @@ class GraphTest < MiniTest::Test
     pointed_edges += g.vertex_edges[edge.v_id]
     pointed_edges += g.vertex_edges[edge.w_id]
     pointed_edges.delete(edge.id)
+
     g.merge!(edge.id)
 
     assert_equal 3, g.n
     assert_equal 4, g.m
 
-    assert_equal [2, 4, 5], g.V.keys  # Vertices 1,3 should've been merged in 5
+    assert_equal [2, 4, 5], g.V.keys  # Vertices 1,3 should've been merged into 5
     assert_equal [1, 3, 4, 5], g.E.keys  # Edge 2 shouldn't exist now
 
     # Edge 2 should not be present for any vertex
@@ -193,27 +194,41 @@ class GraphTest < MiniTest::Test
     end
 
     # Edges that were pointed by merged vertices now should be pointed by the 
-    # new vertex
+    # new vertex (id 5)
     assert_equal nil, g.vertex_edges[edge.v_id]
     assert_equal nil, g.vertex_edges[edge.w_id]
-    assert_equal pointed_edges, g.vertex_edges[5]
+    pointed_edges.each do |e_id|
+      assert_equal true, g.vertex_edges[5].include?(e_id)
+    end
 
     # ...now take and merge edge with id 1
-    <<-DOC
     edge = g.E[1]
+    pointed_edges = []  # Builds expected pointed_edges
+    pointed_edges += g.vertex_edges[edge.v_id]
+    pointed_edges += g.vertex_edges[edge.w_id]
+    pointed_edges.delete(edge.id)
+    pointed_edges.uniq!
+
     g.merge!(edge.id)
 
     assert_equal 2, g.n
     assert_equal 3, g.m
 
-    assert_equal [4, 6], g.V.keys  # Vertices 1,3 should've been merged in 5
-    assert_equal [3, 4, 5], g.E.keys  # Edge 2 shouldn't exist now
+    assert_equal [4, 6], g.V.keys  # Vertices 5,2 should've been merged into 6
+    assert_equal [3, 4, 5], g.E.keys  # Edge 1 shouldn't exist now
 
-    # Edge 2 should not be present for any vertex
+    # Edge 1 should not be present for any vertex
     g.vertex_edges.each do |key, values|
       assert_equal true, !g.vertex_edges[key].include?(edge.id)
     end
-    DOC
+
+    # Edges that were pointed by merged vertices now should be pointed by the
+    # new vertex (id 6)
+    assert_equal nil, g.vertex_edges[edge.v_id]
+    assert_equal nil, g.vertex_edges[edge.w_id]
+    pointed_edges.each do |e_id|
+      assert_equal true, g.vertex_edges[6].include?(e_id)
+    end
   end
 
   # Tests that remove_self_loops method works as expected.

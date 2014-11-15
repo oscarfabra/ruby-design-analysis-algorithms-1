@@ -76,6 +76,13 @@ class Graph
     @vertex_edges.delete(edge.v_id)
     @vertex_edges.delete(edge.w_id)
     @vertex_edges[vertex.id] = pointed_edges
+    pointed_edges.uniq!
+
+    # Updates edges with endpoints on deleted vertices
+    @E.each do |k, e|
+      e.v_id = vertex.id if e.v_id == edge.v_id
+      e.w_id = vertex.id if e.w_id == edge.w_id
+    end
   end
 
   # Removes self-loops of given vertex, if any.

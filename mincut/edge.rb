@@ -10,8 +10,8 @@ class Edge
   @@next_id = 1   # Tells which id to set next. Class variable.
 
   attr_reader :id  # Identifies an edge unequivocally
-  attr_reader :v_id  # Id of initial vertex.
-  attr_reader :w_id  # Id of final vertex.
+  attr_accessor :v_id  # Id of initial vertex.
+  attr_accessor :w_id  # Id of final vertex.
 
   # Initializes a new Edge.
   # +v_id+:: Id of one vertex.
